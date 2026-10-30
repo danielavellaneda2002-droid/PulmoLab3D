@@ -1,8 +1,6 @@
-import * as THREE from
-    'https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js';
+import * as THREE from 'three';
 
-import { OrbitControls } from
-    'https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/controls/OrbitControls.js';
+import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/controls/OrbitControls.js';
 
 // 1. Buscar el espacio donde aparecerá el modelo
 const contenedor = document.getElementById('contenedor3D');
