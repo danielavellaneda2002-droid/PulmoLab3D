@@ -1,0 +1,153 @@
+```html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PulmoLab 3D</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #0b1220;
+            color: #f1f5f9;
+        }
+
+        header {
+            text-align: center;
+            padding: 25px 15px;
+            background: #14243a;
+            border-bottom: 1px solid #30445d;
+        }
+
+        header h1 {
+            color: #67dce8;
+            margin: 0;
+            font-size: 32px;
+        }
+
+        header p {
+            color: #b4c4d8;
+        }
+
+        main {
+            width: 92%;
+            max-width: 1100px;
+            margin: 30px auto;
+        }
+
+        section {
+            margin-bottom: 20px;
+            padding: 22px;
+            border-radius: 15px;
+            background: #142137;
+            border: 1px solid #30445d;
+        }
+
+        h2 {
+            color: #67dce8;
+        }
+
+        #visor {
+            min-height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: radial-gradient(circle, #203b55, #101a2a);
+        }
+
+        button {
+            padding: 12px 18px;
+            border: 0;
+            border-radius: 9px;
+            background: #168b9b;
+            color: white;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #20aabd;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #8fa3bc;
+            font-size: 13px;
+        }
+
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 26px;
+            }
+
+            section {
+                padding: 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>🫁 PulmoLab 3D</h1>
+        <p>Simulador interactivo del sistema respiratorio</p>
+    </header>
+
+    <main>
+
+        <section>
+            <h2>Explora el sistema respiratorio</h2>
+
+            <p>
+                Aprende cómo funcionan los pulmones y descubre
+                los principios físicos de la respiración.
+            </p>
+        </section>
+
+        <section id="visor">
+            <div>
+                <h2>Modelo anatómico</h2>
+                <p id="mensaje">
+                    Aquí construiremos nuestro modelo 3D.
+                </p>
+
+                <button onclick="mostrarMensaje()">
+                    Explorar simulador
+                </button>
+            </div>
+        </section>
+
+        <section>
+            <h2>Laboratorio de Física</h2>
+
+            <p>
+                En esta sección estudiaremos presión,
+                volumen y flujo de aire.
+            </p>
+        </section>
+
+    </main>
+
+    <footer>
+        PulmoLab 3D · Proyecto educativo de Ingeniería Biomédica
+    </footer>
+
+    <script>
+        function mostrarMensaje() {
+            document.getElementById("mensaje").textContent =
+                "¡Bienvenido! Próximamente exploraremos los pulmones en 3D.";
+        }
+    </script>
+
+</body>
+</html>
+```
