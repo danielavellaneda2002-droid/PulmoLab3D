@@ -174,4 +174,4 @@ if (mensaje) {
 }
 
 console.log('PulmoLab 3D: escena iniciada.');
-`
+
