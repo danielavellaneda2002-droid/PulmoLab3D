@@ -37,15 +37,35 @@ cargador.load(
     modelo = resultado.scene;
 
     // Centrar y ajustar el modelo automáticamente
-    const caja = new THREE.Box3().setFromObject(modelo);
-    const centro = caja.getCenter(new THREE.Vector3());
-    const tamano = caja.getSize(new THREE.Vector3());
+const caja = new THREE.Box3().setFromObject(modelo);
+const tamano = caja.getSize(new THREE.Vector3());
 
-    modelo.position.sub(centro);
+const dimensionMayor = Math.max(tamano.x, tamano.y, tamano.z);
+const escala = 5 / dimensionMayor;
 
-    const dimensionMayor = Math.max(tamano.x, tamano.y, tamano.z);
-    const escala = 5 / dimensionMayor;
-    modelo.scale.setScalar(escala);
+modelo.scale.setScalar(escala);
+modelo.updateMatrixWorld(true);
+
+// Centrar después de aplicar la escala
+const cajaAjustada = new THREE.Box3().setFromObject(modelo);
+const centro = cajaAjustada.getCenter(new THREE.Vector3());
+
+modelo.position.sub(centro);
+modelo.updateMatrixWorld(true);
+
+// Ajustar cámara al modelo
+const esfera = new THREE.Sphere();
+new THREE.Box3().setFromObject(modelo).getBoundingSphere(esfera);
+
+const distancia = esfera.radius / Math.sin(THREE.MathUtils.degToRad(camara.fov / 2));
+
+camara.position.set(0, 0, distancia * 1.4);
+camara.near = 0.1;
+camara.far = distancia * 10;
+camara.updateProjectionMatrix();
+
+controles.target.set(0, 0, 0);
+controles.update();
 
     modelo.traverse((objeto) => {
       if (objeto.isMesh) {
@@ -54,10 +74,6 @@ cargador.load(
     });
 
     escena.add(modelo);
-
-    camara.position.set(0, 0, 8);
-    controles.target.set(0, 0, 0);
-    controles.update();
 
     mensaje.textContent = `Modelo cargado correctamente. ${partes.length} estructuras detectadas.`;
     console.log('Modelo cargado:', modelo);
