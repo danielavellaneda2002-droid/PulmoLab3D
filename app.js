@@ -125,14 +125,25 @@ renderizador.domElement.addEventListener('click', (evento) => {
 
   const intersecciones = raycaster.intersectObjects(partes, false);
 
-  if (intersecciones.length > 0) {
-    estructuraSeleccionada = intersecciones[0].object;
+ if (intersecciones.length > 0) {
+estructuraSeleccionada = intersecciones[0].object;
 
-    console.log('Estructura seleccionada:', estructuraSeleccionada.name);
-    mensaje.textContent =
-      'Estructura seleccionada: ' +
-      (estructuraSeleccionada.name || 'Nombre no disponible');
-  }
+const nombre = estructuraSeleccionada.name || 'Estructura sin nombre';
+
+console.log('Estructura seleccionada:', nombre);
+
+mensaje.textContent = 'Estructura seleccionada: ' + nombre;
+
+document.getElementById('nombreEstructura').textContent =
+nombre.replace(/^VH_F_/, '').replaceAll('_', ' ');
+
+document.getElementById('ubicacionEstructura').textContent =
+'Esta estructura pertenece al modelo anatómico pulmonar.';
+
+document.getElementById('funcionEstructura').textContent =
+'Selecciona esta estructura para explorarla y estudiar su anatomía.';
+}
+
 });
 // Animación
 function animar() {
