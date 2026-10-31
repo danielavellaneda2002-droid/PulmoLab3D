@@ -275,7 +275,89 @@ VH_F_left_lingula_inferior_bronchi: {
   ubicacion: "Es una rama del bronquio lobar superior izquierdo.",
   funcion: "Transporta aire hacia el segmento lingular inferior."
 },
-  
+VH_F_cartilage_of_tertiary_bronchus_R: {
+  nombre: "Cartílago del bronquio segmentario derecho",
+  ubicacion: "Se encuentra en la pared de los bronquios segmentarios derechos.",
+  funcion: "Proporciona soporte estructural y ayuda a mantener abiertas las vías respiratorias."
+},
+
+VH_F_right_middle_lobar_bronchus: {
+  nombre: "Bronquio lobar medio derecho",
+  ubicacion: "Se origina del bronquio principal derecho.",
+  funcion: "Conduce aire hacia el lóbulo medio del pulmón derecho."
+},
+
+VH_F_right_superior_lobar_bronchus: {
+  nombre: "Bronquio lobar superior derecho",
+  ubicacion: "Se origina del bronquio principal derecho.",
+  funcion: "Conduce aire hacia el lóbulo superior del pulmón derecho."
+},
+
+VH_F_right_inferior_lobar_bronchus: {
+  nombre: "Bronquio lobar inferior derecho",
+  ubicacion: "Se origina del bronquio principal derecho.",
+  funcion: "Conduce aire hacia el lóbulo inferior del pulmón derecho."
+},
+
+VH_F_right_anterior_bronchus: {
+  nombre: "Bronquio anterior derecho",
+  ubicacion: "Se encuentra en las ramificaciones del bronquio lobar superior derecho.",
+  funcion: "Transporta aire hacia el segmento anterior del pulmón derecho."
+},
+
+VH_F_right_lateral_basal_bronchus: {
+  nombre: "Bronquio basal lateral derecho",
+  ubicacion: "Se localiza en el lóbulo inferior derecho.",
+  funcion: "Conduce aire hacia el segmento basal lateral."
+},
+
+VH_F_right_lateral_bronchus: {
+  nombre: "Bronquio lateral derecho",
+  ubicacion: "Se encuentra entre las ramificaciones bronquiales del pulmón derecho.",
+  funcion: "Conduce aire hacia la región lateral correspondiente."
+},
+
+VH_F_right_medial_bronchus: {
+  nombre: "Bronquio medial derecho",
+  ubicacion: "Se localiza en las ramificaciones bronquiales del pulmón derecho.",
+  funcion: "Conduce aire hacia la región medial correspondiente."
+},
+
+VH_F_right_medial_basal_bronchus: {
+  nombre: "Bronquio basal medial derecho",
+  ubicacion: "Se encuentra en el lóbulo inferior derecho.",
+  funcion: "Transporta aire hacia el segmento basal medial."
+},
+
+VH_F_right_posterior_basal_bronchus: {
+  nombre: "Bronquio basal posterior derecho",
+  ubicacion: "Se localiza en las ramificaciones basales del lóbulo inferior derecho.",
+  funcion: "Conduce aire hacia el segmento basal posterior."
+},
+
+VH_F_right_posterior_bronchus: {
+  nombre: "Bronquio posterior derecho",
+  ubicacion: "Se encuentra en las ramificaciones del lóbulo superior derecho.",
+  funcion: "Transporta aire hacia el segmento posterior."
+},
+
+VH_F_right_superior_bronchus: {
+  nombre: "Bronquio segmentario superior derecho",
+  ubicacion: "Se localiza en el lóbulo inferior derecho.",
+  funcion: "Conduce aire hacia el segmento superior del lóbulo inferior."
+},
+
+VH_F_right_apical_bronchus: {
+  nombre: "Bronquio apical derecho",
+  ubicacion: "Se encuentra en las ramificaciones del lóbulo superior derecho.",
+  funcion: "Conduce aire hacia el segmento apical."
+},
+
+VH_F_right_anterior_basal_bronchus: {
+  nombre: "Bronquio basal anterior derecho",
+  ubicacion: "Se localiza en el lóbulo inferior derecho.",
+  funcion: "Transporta aire hacia el segmento basal anterior."
+},  
 };
 const raycaster = new THREE.Raycaster();
 const puntero = new THREE.Vector2();
