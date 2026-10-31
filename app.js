@@ -263,16 +263,18 @@ estructuraSeleccionada.material = materialResaltado;
 // Actualizar la ficha anatómica
 const nombre = estructuraSeleccionada.name || 'Estructura sin nombre';
 
+const informacion = informacionAnatomica[nombre];
+
 mensaje.textContent = 'Estructura seleccionada: ' + nombre;
 
 document.getElementById('nombreEstructura').textContent =
-nombre.replace(/^VH_F_/, '').replaceAll('_', ' ');
+informacion ? informacion.nombre : nombre.replace(/^VH_F_/, '').replaceAll('_', ' ');
 
 document.getElementById('ubicacionEstructura').textContent =
-'Esta estructura pertenece al modelo anatómico pulmonar.';
+informacion ? informacion.ubicacion : 'Información anatómica próximamente disponible.';
 
 document.getElementById('funcionEstructura').textContent =
-'Selecciona esta estructura para explorarla y estudiar su anatomía.';
+informacion ? informacion.funcion : 'Estamos preparando la información de esta estructura.';
 
 console.log('Estructura resaltada:', nombre);
 }
@@ -287,4 +289,4 @@ function animar() {
 }
 animar();
 
-animar();
+
