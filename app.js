@@ -275,6 +275,11 @@ VH_F_left_lingula_inferior_bronchi: {
   ubicacion: "Es una rama del bronquio lobar superior izquierdo.",
   funcion: "Transporta aire hacia el segmento lingular inferior."
 },
+VH_F_cartilage_of_lobar_bronchus_R: {
+  nombre: "Cartílago del bronquio lobar derecho",
+  ubicacion: "Se encuentra en la pared de los bronquios lobares del pulmón derecho.",
+  funcion: "Proporciona soporte estructural y ayuda a mantener abiertas las vías respiratorias."
+},  
 VH_F_cartilage_of_tertiary_bronchus_R: {
   nombre: "Cartílago del bronquio segmentario derecho",
   ubicacion: "Se encuentra en la pared de los bronquios segmentarios derechos.",
