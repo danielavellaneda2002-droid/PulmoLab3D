@@ -111,11 +111,34 @@ const informacionAnatomica = {
     funcion: "Participa en la ventilación de la región basal medial."
   },
 
-  VH_F_hilum_lower_L: {
+    VH_F_hilum_lower_L: {
     nombre: "Hilio inferior izquierdo",
     ubicacion: "Región inferior del hilio pulmonar izquierdo.",
     funcion: "Forma parte de la zona de paso de estructuras broncovasculares."
+  },
 
+  VH_F_hilum_R: {
+    nombre: "Hilio pulmonar derecho",
+    ubicacion: "Se encuentra en la cara medial del pulmón derecho.",
+    funcion: "Es la zona de paso del bronquio principal derecho, los vasos pulmonares, los vasos linfáticos y los nervios."
+  },
+
+  VH_F_hilum_upper_R: {
+    nombre: "Región superior del hilio derecho",
+    ubicacion: "Se localiza en la porción superior del hilio pulmonar derecho.",
+    funcion: "Forma parte de la región por donde pasan estructuras broncovasculares."
+  },
+
+  VH_F_hilum_middle_R: {
+    nombre: "Región media del hilio derecho",
+    ubicacion: "Se encuentra en la región media del hilio pulmonar derecho.",
+    funcion: "Forma parte de la zona de paso de estructuras broncovasculares."
+  },
+
+  VH_F_hilum_lower_R: {
+    nombre: "Región inferior del hilio derecho",
+    ubicacion: "Se localiza en la porción inferior del hilio pulmonar derecho.",
+    funcion: "Forma parte de la región de paso de estructuras broncovasculares."
   }
 
 };
