@@ -141,10 +141,16 @@ const informacionAnatomica = {
     funcion: "Forma parte de la región de paso de estructuras broncovasculares."
   },
 
-  VH_F_right_posterior_basal_bronchopulmonary_segment: {
+    VH_F_right_posterior_basal_bronchopulmonary_segment: {
     nombre: "Segmento basal posterior derecho",
     ubicacion: "Se encuentra en la región basal posterior del lóbulo inferior derecho.",
     funcion: "Recibe ventilación a través del bronquio segmentario basal posterior y participa en el intercambio gaseoso."
+  },
+
+  VH_F_right_lateral_basal_bronchopulmonary_segment: {
+    nombre: "Segmento basal lateral derecho",
+    ubicacion: "Se encuentra en la región basal lateral del lóbulo inferior del pulmón derecho.",
+    funcion: "Recibe ventilación a través del bronquio segmentario basal lateral y participa en el intercambio gaseoso."
   }
 };
 const raycaster = new THREE.Raycaster();
