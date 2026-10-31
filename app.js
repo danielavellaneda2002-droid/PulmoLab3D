@@ -15,7 +15,9 @@ const renderizador = new THREE.WebGLRenderer({ antialias: true });
 renderizador.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 renderizador.outputColorSpace = THREE.SRGBColorSpace;
 contenedor.appendChild(renderizador.domElement);
-
+renderizador.domElement.style.display = "block";
+renderizador.domElement.style.width = "100%";
+renderizador.domElement.style.height = "100%";
 escena.add(new THREE.AmbientLight(0xffffff, 2));
 
 const luz = new THREE.DirectionalLight(0xffffff, 3);
