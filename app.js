@@ -29,7 +29,10 @@ controles.dampingFactor = 0.05;
 const cargador = new GLTFLoader();
 let modelo;
 let partes = [];
+let estructuraSeleccionada = null;
 
+const raycaster = new THREE.Raycaster();
+const puntero = new THREE.Vector2();
 cargador.load(
   './3d-vh-f-lung.glb',
 
