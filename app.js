@@ -113,6 +113,7 @@ ajustarTamano();
 window.addEventListener('resize', ajustarTamano);
 // Detectar estructuras anatómicas al hacer clic
 renderizador.domElement.addEventListener('click', (evento) => {
+  console.log('¡Clic detectado en el visor!');
   if (!modelo) return;
 
   const rect = renderizador.domElement.getBoundingClientRect();
