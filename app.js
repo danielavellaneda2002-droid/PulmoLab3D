@@ -111,7 +111,28 @@ function ajustarTamano() {
 
 ajustarTamano();
 window.addEventListener('resize', ajustarTamano);
+// Detectar estructuras anatómicas al hacer clic
+renderizador.domElement.addEventListener('click', (evento) => {
+  if (!modelo) return;
 
+  const rect = renderizador.domElement.getBoundingClientRect();
+
+  puntero.x = ((evento.clientX - rect.left) / rect.width) * 2 - 1;
+  puntero.y = -((evento.clientY - rect.top) / rect.height) * 2 + 1;
+
+  raycaster.setFromCamera(puntero, camara);
+
+  const intersecciones = raycaster.intersectObjects(partes, false);
+
+  if (intersecciones.length > 0) {
+    estructuraSeleccionada = intersecciones[0].object;
+
+    console.log('Estructura seleccionada:', estructuraSeleccionada.name);
+    mensaje.textContent =
+      'Estructura seleccionada: ' +
+      (estructuraSeleccionada.name || 'Nombre no disponible');
+  }
+});
 // Animación
 function animar() {
   requestAnimationFrame(animar);
