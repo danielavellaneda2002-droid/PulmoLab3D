@@ -441,7 +441,7 @@ console.log(
 // Ajustar el visor al tamaño disponible
 function ajustarTamano() {
   const ancho = contenedor.clientWidth;
-  const alto = Math.max(360, Math.min(ancho * 0.8, 520));
+  const alto = 450;
 
   camara.aspect = ancho / alto;
   camara.updateProjectionMatrix();
