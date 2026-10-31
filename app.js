@@ -192,6 +192,90 @@ VH_F_right_posterior_bronchopulmonary_segment: {
   ubicacion: "Se localiza en la región posterior del lóbulo superior derecho.",
   funcion: "Participa en la ventilación de la región posterior del lóbulo superior derecho."
 },
+  VH_F_cartilage_of_lobar_bronchus_L: {
+  nombre: "Cartílago del bronquio lobar izquierdo",
+  ubicacion: "Se encuentra en la pared del bronquio lobar del pulmón izquierdo.",
+  funcion: "Proporciona soporte estructural y ayuda a mantener abierta la vía respiratoria."
+},
+
+VH_F_cartilage_of_tertiary_bronchus_L: {
+  nombre: "Cartílago del bronquio segmentario izquierdo",
+  ubicacion: "Se localiza en la pared de los bronquios segmentarios izquierdos.",
+  funcion: "Contribuye al soporte de las vías respiratorias y evita su colapso."
+},
+
+VH_F_left_superior_lobar_bronchus: {
+  nombre: "Bronquio lobar superior izquierdo",
+  ubicacion: "Se origina del bronquio principal izquierdo y se dirige al lóbulo superior.",
+  funcion: "Conduce el aire hacia el lóbulo superior del pulmón izquierdo."
+},
+
+VH_F_left_inferior_lobar_bronchus: {
+  nombre: "Bronquio lobar inferior izquierdo",
+  ubicacion: "Se origina del bronquio principal izquierdo y se dirige al lóbulo inferior.",
+  funcion: "Conduce el aire hacia el lóbulo inferior del pulmón izquierdo."
+},
+
+VH_F_left_anterior_basal_bronchus: {
+  nombre: "Bronquio basal anterior izquierdo",
+  ubicacion: "Se encuentra en el árbol bronquial del lóbulo inferior izquierdo.",
+  funcion: "Transporta aire hacia el segmento basal anterior izquierdo."
+},
+
+VH_F_left_lingula_superior_bronchus: {
+  nombre: "Bronquio lingular superior",
+  ubicacion: "Es una rama del bronquio lobar superior izquierdo.",
+  funcion: "Conduce aire hacia el segmento lingular superior."
+},
+
+VH_F_left_apical_bronchus: {
+  nombre: "Bronquio apical izquierdo",
+  ubicacion: "Se localiza en las ramificaciones bronquiales del pulmón izquierdo.",
+  funcion: "Conduce aire hacia el segmento apical correspondiente."
+},
+
+VH_F_left_posterior_basal_bronchus: {
+  nombre: "Bronquio basal posterior izquierdo",
+  ubicacion: "Se encuentra en el lóbulo inferior del pulmón izquierdo.",
+  funcion: "Transporta aire hacia el segmento basal posterior."
+},
+
+VH_F_left_medial_basal_bronchus: {
+  nombre: "Bronquio basal medial izquierdo",
+  ubicacion: "Se localiza en las ramificaciones basales del pulmón izquierdo.",
+  funcion: "Conduce aire hacia la región basal medial."
+},
+
+VH_F_left_superior_bronchus: {
+  nombre: "Bronquio segmentario superior izquierdo",
+  ubicacion: "Se encuentra en el lóbulo inferior del pulmón izquierdo.",
+  funcion: "Transporta aire hacia el segmento superior del lóbulo inferior."
+},
+
+VH_F_left_anterior_bronchus: {
+  nombre: "Bronquio anterior izquierdo",
+  ubicacion: "Se encuentra en las ramificaciones del bronquio lobar superior izquierdo.",
+  funcion: "Conduce aire hacia el segmento anterior del pulmón izquierdo."
+},
+
+VH_F_left_posterior_bronchus: {
+  nombre: "Bronquio posterior izquierdo",
+  ubicacion: "Se encuentra en las ramificaciones del lóbulo superior izquierdo.",
+  funcion: "Transporta aire hacia el segmento posterior."
+},
+
+VH_F_left_lateral_basal_bronchus: {
+  nombre: "Bronquio basal lateral izquierdo",
+  ubicacion: "Se localiza en el lóbulo inferior izquierdo.",
+  funcion: "Conduce aire hacia el segmento basal lateral."
+},
+
+VH_F_left_lingula_inferior_bronchi: {
+  nombre: "Bronquio lingular inferior",
+  ubicacion: "Es una rama del bronquio lobar superior izquierdo.",
+  funcion: "Transporta aire hacia el segmento lingular inferior."
+},
+  
 };
 const raycaster = new THREE.Raycaster();
 const puntero = new THREE.Vector2();
