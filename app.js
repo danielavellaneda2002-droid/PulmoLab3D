@@ -32,9 +32,12 @@ let partes = [];
 let estructuraSeleccionada = null;
 // BASE DE DATOS ANATÓMICA - PULMÓN IZQUIERDO
 
-const informacionAnatomica = {
+const informacion = informacionAnatomica[nombre];
+
 console.log("Nombre detectado:", nombre);
-console.log("Ficha encontrada:", informacionAnatomica[nombre]);
+console.log("Ficha encontrada:", informacion);
+
+mensaje.textContent = 'Estructura seleccionada: ' + nombre;
   VH_F_hilum_L: {
     nombre: "Hilio pulmonar izquierdo",
     ubicacion: "Se encuentra en la cara medial del pulmón izquierdo.",
