@@ -78,14 +78,15 @@ controles.update();
 
     escena.add(modelo);
 
-    mensaje.textContent = `Modelo cargado correctamente. ${partes.length} estructuras detectadas.`;
-    console.log('Modelo cargado:', modelo);
-    console.log('Estructuras:', partes);
-    console.log(
+   mensaje.textContent = `Modelo cargado correctamente. ${partes.length} estructuras detectadas.`;
+
+console.log('Modelo cargado:', modelo);
+
+console.log(
   'NOMBRES DE ESTRUCTURAS:',
   partes.map(parte => parte.name)
 );
-  },
+},
 
   function (progreso) {
     if (progreso.total) {
