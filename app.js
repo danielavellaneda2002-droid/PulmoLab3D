@@ -30,7 +30,90 @@ const cargador = new GLTFLoader();
 let modelo;
 let partes = [];
 let estructuraSeleccionada = null;
+// BASE DE DATOS ANATÓMICA - PULMÓN IZQUIERDO
 
+const informacionAnatomica = {
+
+  VH_F_hilum_L: {
+    nombre: "Hilio pulmonar izquierdo",
+    ubicacion: "Se encuentra en la cara medial del pulmón izquierdo.",
+    funcion: "Es la zona de entrada y salida de bronquios, vasos sanguíneos, vasos linfáticos y nervios."
+  },
+
+  VH_F_hilum_upper_L: {
+    nombre: "Hilio superior izquierdo",
+    ubicacion: "Región superior del hilio del pulmón izquierdo.",
+    funcion: "Forma parte de la zona de paso de las estructuras broncovasculares pulmonares."
+  },
+
+  VH_F_lingula_superior_bronchopulmonary_segment: {
+    nombre: "Segmento lingular superior",
+    ubicacion: "Se encuentra en la língula del lóbulo superior izquierdo.",
+    funcion: "Recibe ventilación a través del bronquio segmentario lingular superior."
+  },
+
+  VH_F_left_anterior_bronchopulmonary_segment: {
+    nombre: "Segmento anterior izquierdo",
+    ubicacion: "Se localiza en la región anterior del pulmón izquierdo.",
+    funcion: "Participa en la ventilación del lóbulo superior izquierdo."
+  },
+
+  VH_F_left_apical_bronchopulmonary_segment: {
+    nombre: "Segmento apical izquierdo",
+    ubicacion: "Se encuentra en la región superior del lóbulo superior izquierdo.",
+    funcion: "Recibe aire mediante su bronquio segmentario correspondiente."
+  },
+
+  VH_F_left_posterior_bronchopulmonary_segment: {
+    nombre: "Segmento posterior izquierdo",
+    ubicacion: "Se encuentra en la región posterior del lóbulo superior izquierdo.",
+    funcion: "Participa en la ventilación de la región posterior del lóbulo superior."
+  },
+
+  VH_F_lingula_inferior_bronchopulmonary_segment: {
+    nombre: "Segmento lingular inferior",
+    ubicacion: "Se encuentra en la porción inferior de la língula izquierda.",
+    funcion: "Recibe ventilación mediante el bronquio lingular inferior."
+  },
+
+  VH_F_left_superior_bronchopulmonary_segment: {
+    nombre: "Segmento superior izquierdo",
+    ubicacion: "Se localiza en la región superior del lóbulo inferior izquierdo.",
+    funcion: "Participa en la ventilación de la región superior del lóbulo inferior."
+  },
+
+  VH_F_left_posterior_basal_bronchopulmonary_segment: {
+    nombre: "Segmento basal posterior izquierdo",
+    ubicacion: "Se encuentra en la región basal posterior del lóbulo inferior izquierdo.",
+    funcion: "Participa en la ventilación de la región basal posterior."
+  },
+
+  VH_F_left_anterior_basal_bronchopulmonary_segment: {
+    nombre: "Segmento basal anterior izquierdo",
+    ubicacion: "Se localiza en la región basal anterior del lóbulo inferior izquierdo.",
+    funcion: "Participa en la ventilación de la región basal anterior."
+  },
+
+  VH_F_left_lateral_basal_bronchopulmonary_segment: {
+    nombre: "Segmento basal lateral izquierdo",
+    ubicacion: "Se encuentra en la región basal lateral del lóbulo inferior izquierdo.",
+    funcion: "Participa en la ventilación de la región basal lateral."
+  },
+
+  VH_F_left_medial_basal_bronchopulmonary_segment: {
+    nombre: "Segmento basal medial izquierdo",
+    ubicacion: "Se localiza en la región basal medial del lóbulo inferior izquierdo.",
+    funcion: "Participa en la ventilación de la región basal medial."
+  },
+
+  VH_F_hilum_lower_L: {
+    nombre: "Hilio inferior izquierdo",
+    ubicacion: "Región inferior del hilio pulmonar izquierdo.",
+    funcion: "Forma parte de la zona de paso de estructuras broncovasculares."
+
+  }
+
+};
 const raycaster = new THREE.Raycaster();
 const puntero = new THREE.Vector2();
 cargador.load(
