@@ -158,12 +158,16 @@ const materiales = Array.isArray(materialResaltado)
 : [materialResaltado];
 
 materiales.forEach(material => {
-if (material.emissive) {
-material.emissive.set(0x00ffff);
-material.emissiveIntensity = 0.8;
-} else if (material.color) {
-material.color.set(0x00ffff);
-}
+  if (material.color) {
+    material.color.set(0x00ffff);
+  }
+
+  if (material.emissive) {
+    material.emissive.set(0x00ffff);
+    material.emissiveIntensity = 1.5;
+  }
+
+  material.needsUpdate = true;
 });
 
 estructuraSeleccionada.material = materialResaltado;
