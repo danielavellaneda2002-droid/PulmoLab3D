@@ -410,7 +410,12 @@ controles.update();
         partes.push(objeto);
       }
     });
-
+partes.forEach(parte => {
+  console.log(
+    parte.name,
+    parte.getWorldPosition(new THREE.Vector3())
+  );
+});
     escena.add(modelo);
 
    mensaje.textContent = `Modelo cargado correctamente. ${partes.length} estructuras detectadas.`;
