@@ -51,6 +51,11 @@ const informacionAnatomica = {
     ubicacion: "Se encuentra en la língula del lóbulo superior izquierdo.",
     funcion: "Recibe ventilación a través del bronquio segmentario lingular superior."
   },
+    VH_F_lingula_inferior_bronchopulmonary_segment: {
+    nombre: "Segmento lingular inferior",
+    ubicacion: "Se encuentra en la porción inferior de la língula del lóbulo superior izquierdo.",
+    funcion: "Recibe ventilación a través del bronquio lingular inferior."
+  },
 
   VH_F_left_anterior_bronchopulmonary_segment: {
     nombre: "Segmento anterior izquierdo",
