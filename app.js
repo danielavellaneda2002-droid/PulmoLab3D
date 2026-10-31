@@ -125,24 +125,66 @@ renderizador.domElement.addEventListener('click', (evento) => {
 
   const intersecciones = raycaster.intersectObjects(partes, false);
 
- if (intersecciones.length > 0) {
+if (intersecciones.length > 0) {
+
+// Restaurar el material de la estructura anterior
+if (
+estructuraSeleccionada &&
+estructuraSeleccionada.userData.materialOriginal
+) {
+estructuraSeleccionada.material =
+estructuraSeleccionada.userData.materialOriginal;
+}
+
+// Identificar la nueva estructura
 estructuraSeleccionada = intersecciones[0].object;
 
-const nombre = estructuraSeleccionada.name || 'Estructura sin nombre';
+// Guardar su material original
+if (!estructuraSeleccionada.userData.materialOriginal) {
+estructuraSeleccionada.userData.materialOriginal =
+estructuraSeleccionada.material;
+}
 
-console.log('Estructura seleccionada:', nombre);
+// Crear una copia del material para resaltarlo
+const materialOriginal = estructuraSeleccionada.material;
+
+const materialResaltado = Array.isArray(materialOriginal)
+? materialOriginal.map(material => material.clone())
+: materialOriginal.clone();
+
+// Aplicar iluminación turquesa
+const materiales = Array.isArray(materialResaltado)
+? materialResaltado
+: [materialResaltado];
+
+materiales.forEach(material => {
+if (material.emissive) {
+material.emissive.set(0x00ffff);
+material.emissiveIntensity = 0.8;
+} else if (material.color) {
+material.color.set(0x00ffff);
+}
+});
+
+estructuraSeleccionada.material = materialResaltado;
+
+// Actualizar la ficha anatómica
+const nombre = estructuraSeleccionada.name || 'Estructura sin nombre';
 
 mensaje.textContent = 'Estructura seleccionada: ' + nombre;
 
 document.getElementById('nombreEstructura').textContent =
 nombre.replace(/^VH_F_/, '').replaceAll('_', ' ');
-console.log('Ficha actualizada:', document.getElementById('nombreEstructura').textContent);
+
 document.getElementById('ubicacionEstructura').textContent =
 'Esta estructura pertenece al modelo anatómico pulmonar.';
 
 document.getElementById('funcionEstructura').textContent =
 'Selecciona esta estructura para explorarla y estudiar su anatomía.';
+
+console.log('Estructura resaltada:', nombre);
 }
+
 
 });
 // Animación
@@ -151,5 +193,6 @@ function animar() {
   controles.update();
   renderizador.render(escena, camara);
 }
+animar();
 
 animar();
