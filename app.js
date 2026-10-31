@@ -135,22 +135,28 @@ const informacionAnatomica = {
   },
 
   VH_F_hilum_lower_R: {
-    nombre: "Región inferior del hilio derecho",
-    ubicacion: "Se localiza en la porción inferior del hilio pulmonar derecho.",
-    funcion: "Forma parte de la región de paso de estructuras broncovasculares."
-  },
+  nombre: "Región inferior del hilio derecho",
+  ubicacion: "Se localiza en la porción inferior del hilio pulmonar derecho.",
+  funcion: "Forma parte de la región de paso de estructuras broncovasculares."
+},
 
-    VH_F_right_posterior_basal_bronchopulmonary_segment: {
-    nombre: "Segmento basal posterior derecho",
-    ubicacion: "Se encuentra en la región basal posterior del lóbulo inferior derecho.",
-    funcion: "Recibe ventilación a través del bronquio segmentario basal posterior y participa en el intercambio gaseoso."
-  },
+VH_F_right_superior_bronchopulmonary_segment: {
+  nombre: "Segmento superior derecho",
+  ubicacion: "Se localiza en la región superior del lóbulo inferior del pulmón derecho.",
+  funcion: "Recibe ventilación a través del bronquio segmentario superior derecho y participa en el intercambio gaseoso pulmonar."
+},
 
-  VH_F_right_lateral_basal_bronchopulmonary_segment: {
-    nombre: "Segmento basal lateral derecho",
-    ubicacion: "Se encuentra en la región basal lateral del lóbulo inferior del pulmón derecho.",
-    funcion: "Recibe ventilación a través del bronquio segmentario basal lateral y participa en el intercambio gaseoso."
-  }
+VH_F_right_posterior_basal_bronchopulmonary_segment: {
+  nombre: "Segmento basal posterior derecho",
+  ubicacion: "Se encuentra en la región basal posterior del lóbulo inferior derecho.",
+  funcion: "Recibe ventilación a través del bronquio segmentario basal posterior y participa en el intercambio gaseoso."
+},
+
+VH_F_right_lateral_basal_bronchopulmonary_segment: {
+  nombre: "Segmento basal lateral derecho",
+  ubicacion: "Se encuentra en la región basal lateral del lóbulo inferior del pulmón derecho.",
+  funcion: "Recibe ventilación a través del bronquio segmentario basal lateral y participa en el intercambio gaseoso."
+},
 };
 const raycaster = new THREE.Raycaster();
 const puntero = new THREE.Vector2();
