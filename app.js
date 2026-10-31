@@ -136,7 +136,7 @@ mensaje.textContent = 'Estructura seleccionada: ' + nombre;
 
 document.getElementById('nombreEstructura').textContent =
 nombre.replace(/^VH_F_/, '').replaceAll('_', ' ');
-
+console.log('Ficha actualizada:', document.getElementById('nombreEstructura').textContent);
 document.getElementById('ubicacionEstructura').textContent =
 'Esta estructura pertenece al modelo anatómico pulmonar.';
 
