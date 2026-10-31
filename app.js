@@ -74,12 +74,6 @@ const informacionAnatomica = {
     funcion: "Participa en la ventilación de la región posterior del lóbulo superior."
   },
 
-  VH_F_lingula_inferior_bronchopulmonary_segment: {
-    nombre: "Segmento lingular inferior",
-    ubicacion: "Se encuentra en la porción inferior de la língula izquierda.",
-    funcion: "Recibe ventilación mediante el bronquio lingular inferior."
-  },
-
   VH_F_left_superior_bronchopulmonary_segment: {
     nombre: "Segmento superior izquierdo",
     ubicacion: "Se localiza en la región superior del lóbulo inferior izquierdo.",
@@ -156,6 +150,47 @@ VH_F_right_lateral_basal_bronchopulmonary_segment: {
   nombre: "Segmento basal lateral derecho",
   ubicacion: "Se encuentra en la región basal lateral del lóbulo inferior del pulmón derecho.",
   funcion: "Recibe ventilación a través del bronquio segmentario basal lateral y participa en el intercambio gaseoso."
+},
+  VH_F_right_medial_basal_bronchopulmonary_segment: {
+  nombre: "Segmento basal medial derecho",
+  ubicacion: "Se localiza en la región basal medial del lóbulo inferior derecho.",
+  funcion: "Participa en la ventilación de la región basal medial y en el intercambio gaseoso."
+},
+
+VH_F_right_anterior_basal_bronchopulmonary_segment: {
+  nombre: "Segmento basal anterior derecho",
+  ubicacion: "Se encuentra en la región basal anterior del lóbulo inferior derecho.",
+  funcion: "Recibe aire a través del bronquio segmentario basal anterior y participa en el intercambio gaseoso."
+},
+
+VH_F_right_medial_bronchopulmonary_segment: {
+  nombre: "Segmento medial del pulmón derecho",
+  ubicacion: "Se localiza en la región medial del pulmón derecho.",
+  funcion: "Participa en la ventilación pulmonar y el intercambio gaseoso."
+},
+
+VH_F_right_lateral_bronchopulmonary_segmennt: {
+  nombre: "Segmento lateral del pulmón derecho",
+  ubicacion: "Se encuentra en la región lateral del pulmón derecho.",
+  funcion: "Participa en la ventilación pulmonar y el intercambio gaseoso."
+},
+
+VH_F_right_anterior_bronchopulmonary_segm: {
+  nombre: "Segmento anterior derecho",
+  ubicacion: "Se localiza en la región anterior del lóbulo superior derecho.",
+  funcion: "Participa en la ventilación del lóbulo superior derecho."
+},
+
+VH_F_right_apical_bronchopulmonary_segment: {
+  nombre: "Segmento apical derecho",
+  ubicacion: "Se encuentra en la región apical del lóbulo superior derecho.",
+  funcion: "Recibe aire a través del bronquio segmentario apical derecho."
+},
+
+VH_F_right_posterior_bronchopulmonary_segment: {
+  nombre: "Segmento posterior derecho",
+  ubicacion: "Se localiza en la región posterior del lóbulo superior derecho.",
+  funcion: "Participa en la ventilación de la región posterior del lóbulo superior derecho."
 },
 };
 const raycaster = new THREE.Raycaster();
