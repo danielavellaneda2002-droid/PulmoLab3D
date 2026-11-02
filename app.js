@@ -414,10 +414,21 @@ partes
   .filter(parte => parte.name.toLowerCase().includes("bronchus"))
   .forEach(parte => {
     const caja = new THREE.Box3().setFromObject(parte);
+    const centro = caja.getCenter(new THREE.Vector3());
+    const tamano = caja.getSize(new THREE.Vector3());
 
-    console.log("BRONQUIO:", parte.name);
-    console.log("CENTRO:", caja.getCenter(new THREE.Vector3()));
-    console.log("TAMAÑO:", caja.getSize(new THREE.Vector3()));
+    console.log("BRONQUIO:", parte.name, {
+      centro: {
+        x: centro.x.toFixed(3),
+        y: centro.y.toFixed(3),
+        z: centro.z.toFixed(3)
+      },
+      tamano: {
+        x: tamano.x.toFixed(3),
+        y: tamano.y.toFixed(3),
+        z: tamano.z.toFixed(3)
+      }
+    });
   });
     escena.add(modelo);
 
