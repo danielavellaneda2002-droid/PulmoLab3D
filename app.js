@@ -396,7 +396,44 @@ const paredTraquea = new THREE.Mesh(
 
 paredTraquea.name = "VH_F_trachea";
 traquea.add(paredTraquea);
+// Bifurcación de la tráquea hacia los bronquios principales
+function crearRamaBronquial(inicio, fin, radio = 0.16) {
+  const puntoInicio = new THREE.Vector3(...inicio);
+  const puntoFin = new THREE.Vector3(...fin);
 
+  const direccion = new THREE.Vector3()
+    .subVectors(puntoFin, puntoInicio);
+
+  const geometria = new THREE.CylinderGeometry(
+    radio * 0.75,
+    radio,
+    direccion.length(),
+    24
+  );
+
+  const rama = new THREE.Mesh(
+    geometria,
+    materialTraquea
+  );
+
+  rama.position.copy(
+    puntoInicio.clone().add(puntoFin).multiplyScalar(0.5)
+  );
+
+  rama.quaternion.setFromUnitVectors(
+    new THREE.Vector3(0, 1, 0),
+    direccion.normalize()
+  );
+
+  rama.name = "VH_F_main_bronchus";
+  traquea.add(rama);
+
+  return rama;
+}
+
+// Las ramas parten de la zona inferior de la tráquea
+crearRamaBronquial([0, -0.9, 0], [-0.65, -1.65, 0]);
+crearRamaBronquial([0, -0.9, 0], [0.65, -1.65, 0]);
 // Anillos cartilaginosos
 for (let i = 0; i < 12; i++) {
   const geometriaAnillo = new THREE.TorusGeometry(
