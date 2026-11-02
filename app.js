@@ -634,8 +634,17 @@ nombresBronquios.forEach(nombre => {
       })
     );
 
-    console.log("CENTRO:", nombre, centro.toArray());
-    console.log("TAMAÑO:", nombre, tamano.toArray());
+    console.log(
+  "CENTRO:",
+  nombre,
+  JSON.stringify(centro.toArray())
+);
+
+console.log(
+  "TAMAÑO:",
+  nombre,
+  JSON.stringify(tamano.toArray())
+);
   }
 });
 // MEDIR DISTANCIA ENTRE BRONQUIOS PRINCIPALES Y LOBAR​ES
