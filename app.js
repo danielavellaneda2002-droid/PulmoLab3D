@@ -437,9 +437,14 @@ partes
 console.log('Modelo cargado:', modelo);
 
 console.log(
-  'NOMBRES DE ESTRUCTURAS:',
-  partes.map(parte => parte.name)
+'ESTRUCTURAS RESPIRATORIAS:',
+partes
+.map(parte => parte.name)
+.filter(nombre => /trach|bronch|airway|cartilage|windpipe/i.test(nombre))
 );
+
+console.log('TODAS LAS ESTRUCTURAS:', partes.map(parte => parte.name));
+
 },
 
   function (progreso) {
