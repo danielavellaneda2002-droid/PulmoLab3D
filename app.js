@@ -410,12 +410,15 @@ controles.update();
         partes.push(objeto);
       }
     });
-partes.forEach(parte => {
-  console.log(
-    parte.name,
-    parte.getWorldPosition(new THREE.Vector3())
-  );
-});
+partes
+  .filter(parte => parte.name.toLowerCase().includes("bronchus"))
+  .forEach(parte => {
+    const caja = new THREE.Box3().setFromObject(parte);
+
+    console.log("BRONQUIO:", parte.name);
+    console.log("CENTRO:", caja.getCenter(new THREE.Vector3()));
+    console.log("TAMAÑO:", caja.getSize(new THREE.Vector3()));
+  });
     escena.add(modelo);
 
    mensaje.textContent = `Modelo cargado correctamente. ${partes.length} estructuras detectadas.`;
