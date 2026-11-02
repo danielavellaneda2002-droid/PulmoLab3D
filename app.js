@@ -616,9 +616,15 @@ nombresBronquios.forEach(nombre => {
   const bronquio = partes.find(parte => parte.name === nombre);
 
   if (bronquio) {
+    bronquio.updateWorldMatrix(true, false);
+
     const caja = new THREE.Box3().setFromObject(bronquio);
-console.log("MINIMO:", caja.min.toArray());
-console.log("MAXIMO:", caja.max.toArray());
+    const centro = caja.getCenter(new THREE.Vector3());
+    const tamano = caja.getSize(new THREE.Vector3());
+
+    console.log("MINIMO:", caja.min.toArray());
+    console.log("MAXIMO:", caja.max.toArray());
+
     console.log(
       "COORDENADAS BRONQUIO:",
       nombre,
@@ -627,6 +633,9 @@ console.log("MAXIMO:", caja.max.toArray());
         maximo: caja.max.toArray().map(v => Number(v.toFixed(3)))
       })
     );
+
+    console.log("CENTRO:", nombre, centro.toArray());
+    console.log("TAMAÑO:", nombre, tamano.toArray());
   }
 });
 // MEDIR DISTANCIA ENTRE BRONQUIOS PRINCIPALES Y LOBAR​ES
