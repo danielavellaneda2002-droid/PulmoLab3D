@@ -568,11 +568,18 @@ nombresBronquios.forEach(nombre => {
 
   if (bronquio) {
     const caja = new THREE.Box3().setFromObject(bronquio);
-
-    console.log("COORDENADAS BRONQUIO:", nombre, {
-      minimo: caja.min,
-      maximo: caja.max
-    });
+console.log("COORDENADAS BRONQUIO:", nombre, {
+  minimo: [
+    caja.min.x.toFixed(3),
+    caja.min.y.toFixed(3),
+    caja.min.z.toFixed(3)
+  ],
+  maximo: [
+    caja.max.x.toFixed(3),
+    caja.max.y.toFixed(3),
+    caja.max.z.toFixed(3)
+  ]
+});
   }
 });
 
