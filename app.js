@@ -543,6 +543,25 @@ traquea.position.set(0, 2.5, 0);
 
 // Primero agregamos la tráquea a la escena
 escena.add(traquea);
+traquea.updateMatrixWorld(true);
+
+// Extremo del bronquio principal derecho
+const extremoDerecho = new THREE.Vector3(-0.65, -1.65, 0);
+traquea.localToWorld(extremoDerecho);
+
+// Extremo del bronquio principal izquierdo
+const extremoIzquierdo = new THREE.Vector3(0.85, -1.7, -0.2);
+traquea.localToWorld(extremoIzquierdo);
+
+console.log(
+  "EXTREMO BRONQUIO DERECHO:",
+  extremoDerecho.toArray()
+);
+
+console.log(
+  "EXTREMO BRONQUIO IZQUIERDO:",
+  extremoIzquierdo.toArray()
+);    
 // MEDIR ÚNICAMENTE LA PARED TRAQUEAL
 paredTraquea.updateWorldMatrix(true, false);
 
@@ -587,12 +606,6 @@ console.log("LÍMITE SUPERIOR TRÁQUEA:",
     cajaTraqueaGlobal.max.toArray()
 );
 
-console.log(
-  "TAMAÑO DE LA TRÁQUEA:",
-  new THREE.Box3()
-    .setFromObject(traquea)
-    .getSize(new THREE.Vector3())
-);
     traquea.traverse((objeto) => {
   if (objeto.isMesh) {
     partes.push(objeto);
