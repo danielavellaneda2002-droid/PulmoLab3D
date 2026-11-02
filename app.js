@@ -479,7 +479,7 @@ cargador.load(
     modelo = resultado.scene;
 
     // Centrar y ajustar el modelo automáticamente
-const caja = new THREE.Box3().setFromObject(modelo);
+const caja = new THREE.Box3().setFromObject(modelo);    
 const tamano = caja.getSize(new THREE.Vector3());
 
 const dimensionMayor = Math.max(tamano.x, tamano.y, tamano.z);
@@ -568,7 +568,8 @@ nombresBronquios.forEach(nombre => {
 
   if (bronquio) {
     const caja = new THREE.Box3().setFromObject(bronquio);
-
+console.log("MINIMO:", caja.min.toArray());
+console.log("MAXIMO:", caja.max.toArray());
     console.log(
       "COORDENADAS BRONQUIO:",
       nombre,
