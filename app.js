@@ -545,23 +545,16 @@ traquea.position.set(0, 2.5, 0);
 escena.add(traquea);
 traquea.updateMatrixWorld(true);
 
-// Extremo del bronquio principal derecho
-const extremoDerecho = new THREE.Vector3(-0.65, -1.65, 0);
+// Extremo actual del bronquio principal derecho
+const extremoDerecho = new THREE.Vector3(-0.680, -1.777, -0.096);
 traquea.localToWorld(extremoDerecho);
 
-// Extremo del bronquio principal izquierdo
-const extremoIzquierdo = new THREE.Vector3(0.85, -1.7, -0.2);
+// Extremo actual del bronquio principal izquierdo
+const extremoIzquierdo = new THREE.Vector3(0.889, -1.878, -0.164);
 traquea.localToWorld(extremoIzquierdo);
 
-console.log(
-  "EXTREMO BRONQUIO DERECHO:",
-  extremoDerecho.toArray()
-);
-
-console.log(
-  "EXTREMO BRONQUIO IZQUIERDO:",
-  extremoIzquierdo.toArray()
-);    
+console.log("EXTREMO DERECHO ACTUAL:", extremoDerecho.toArray());
+console.log("EXTREMO IZQUIERDO ACTUAL:", extremoIzquierdo.toArray());
 // MEDIR ÚNICAMENTE LA PARED TRAQUEAL
 paredTraquea.updateWorldMatrix(true, false);
 
