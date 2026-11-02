@@ -495,6 +495,19 @@ partes
     escena.add(modelo);
 traquea.position.set(0, 2.5, 0);
 escena.add(traquea);
+    console.log(
+  "POSICIÓN DE LA TRÁQUEA:",
+  new THREE.Box3()
+    .setFromObject(traquea)
+    .getCenter(new THREE.Vector3())
+);
+
+console.log(
+  "TAMAÑO DE LA TRÁQUEA:",
+  new THREE.Box3()
+    .setFromObject(traquea)
+    .getSize(new THREE.Vector3())
+);
     traquea.traverse((objeto) => {
   if (objeto.isMesh) {
     partes.push(objeto);
