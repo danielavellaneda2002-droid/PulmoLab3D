@@ -396,6 +396,22 @@ const paredTraquea = new THREE.Mesh(
 
 paredTraquea.name = "VH_F_trachea";
 traquea.add(paredTraquea);
+// MEDIR SOLAMENTE LA PARED TRAQUEAL
+paredTraquea.updateWorldMatrix(true, false);
+
+const cajaPared = new THREE.Box3().setFromObject(paredTraquea);
+
+console.log("CENTRO PARED TRAQUEAL:",
+    cajaPared.getCenter(new THREE.Vector3()).toArray()
+);
+
+console.log("LÍMITE INFERIOR PARED TRAQUEAL:",
+    cajaPared.min.toArray()
+);
+
+console.log("LÍMITE SUPERIOR PARED TRAQUEAL:",
+    cajaPared.max.toArray()
+);
 // Bifurcación de la tráquea hacia los bronquios principales
 function crearRamaBronquial(inicio, fin, radio = 0.16) {
   const puntoInicio = new THREE.Vector3(...inicio);
