@@ -582,11 +582,6 @@ console.log("MAXIMO:", caja.max.toArray());
 });
 
 
-  ]
-});
-  }
-});
-
    mensaje.textContent = `Modelo cargado correctamente. ${partes.length} estructuras detectadas.`;
 
 console.log('Modelo cargado:', modelo);
