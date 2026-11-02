@@ -396,22 +396,7 @@ const paredTraquea = new THREE.Mesh(
 
 paredTraquea.name = "VH_F_trachea";
 traquea.add(paredTraquea);
-// MEDIR SOLAMENTE LA PARED TRAQUEAL
-paredTraquea.updateWorldMatrix(true, false);
 
-const cajaPared = new THREE.Box3().setFromObject(paredTraquea);
-
-console.log("CENTRO PARED TRAQUEAL:",
-    cajaPared.getCenter(new THREE.Vector3()).toArray()
-);
-
-console.log("LÍMITE INFERIOR PARED TRAQUEAL:",
-    cajaPared.min.toArray()
-);
-
-console.log("LÍMITE SUPERIOR PARED TRAQUEAL:",
-    cajaPared.max.toArray()
-);
 // Bifurcación de la tráquea hacia los bronquios principales
 function crearRamaBronquial(inicio, fin, radio = 0.16) {
   const puntoInicio = new THREE.Vector3(...inicio);
@@ -556,7 +541,24 @@ traquea.position.set(0, 2.5, 0);
 
 // Primero agregamos la tráquea a la escena
 escena.add(traquea);
+// MEDIR ÚNICAMENTE LA PARED TRAQUEAL
+paredTraquea.updateWorldMatrix(true, false);
 
+const cajaPared = new THREE.Box3().setFromObject(paredTraquea);
+
+console.log(
+  "CENTRO PARED TRAQUEAL:",
+  cajaPared.getCenter(new THREE.Vector3()).toArray()
+);
+
+console.log(
+  "LÍMITE INFERIOR PARED TRAQUEAL:",
+  cajaPared.min.toArray()
+);
+
+console.log(
+  "LÍMITE SUPERIOR PARED TRAQUEAL:",
+  cajaPared.max.toArray()
 // Actualizamos sus coordenadas globales
 traquea.updateMatrixWorld(true);
 
