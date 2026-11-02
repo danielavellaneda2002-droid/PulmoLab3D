@@ -534,14 +534,35 @@ partes
       }
     });
   });
-    escena.add(modelo);
+   escena.add(modelo);
+
 traquea.position.set(0, 2.5, 0);
+
+// Primero agregamos la tráquea a la escena
 escena.add(traquea);
-    console.log(
-  "POSICIÓN DE LA TRÁQUEA:",
-  new THREE.Box3()
-    .setFromObject(traquea)
-    .getCenter(new THREE.Vector3())
+
+// Actualizamos sus coordenadas globales
+traquea.updateMatrixWorld(true);
+
+// Calculamos sus límites
+const cajaTraqueaGlobal = new THREE.Box3().setFromObject(traquea);
+
+console.log("POSICIÓN LOCAL TRÁQUEA:", traquea.position.toArray());
+
+console.log("CENTRO DE LA TRÁQUEA:",
+    cajaTraqueaGlobal.getCenter(new THREE.Vector3()).toArray()
+);
+
+console.log("TAMAÑO DE LA TRÁQUEA:",
+    cajaTraqueaGlobal.getSize(new THREE.Vector3()).toArray()
+);
+
+console.log("LÍMITE INFERIOR TRÁQUEA:",
+    cajaTraqueaGlobal.min.toArray()
+);
+
+console.log("LÍMITE SUPERIOR TRÁQUEA:",
+    cajaTraqueaGlobal.max.toArray()
 );
 
 console.log(
