@@ -366,6 +366,68 @@ VH_F_right_anterior_basal_bronchus: {
   funcion: "Transporta aire hacia el segmento basal anterior."
 },  
 };
+// TRÁQUEA 3D: estructura anatómica adicional
+const traquea = new THREE.Group();
+traquea.name = "VH_F_trachea";
+
+// Material de la pared traqueal
+const materialTraquea = new THREE.MeshStandardMaterial({
+  color: 0xc98f91,
+  roughness: 0.65,
+  metalness: 0
+});
+
+// Material de los anillos cartilaginosos
+const materialCartilagoTraqueal = new THREE.MeshStandardMaterial({
+  color: 0xe8c7b9,
+  roughness: 0.5,
+  metalness: 0
+});
+
+// Tubo principal
+const geometriaTraquea = new THREE.CylinderGeometry(
+  0.24, 0.24, 2.2, 32, 1, true
+);
+
+const paredTraquea = new THREE.Mesh(
+  geometriaTraquea,
+  materialTraquea
+);
+
+paredTraquea.name = "VH_F_trachea";
+traquea.add(paredTraquea);
+
+// Anillos cartilaginosos
+for (let i = 0; i < 12; i++) {
+  const geometriaAnillo = new THREE.TorusGeometry(
+    0.24, 0.035, 8, 32
+  );
+
+  const anillo = new THREE.Mesh(
+    geometriaAnillo,
+    materialCartilagoTraqueal
+  );
+
+  anillo.rotation.x = Math.PI / 2;
+  anillo.position.y = 0.95 - i * 0.17;
+  anillo.name = "VH_F_tracheal_cartilage";
+
+  traquea.add(anillo);
+}
+
+// Registrar la información anatómica
+informacionAnatomica.VH_F_trachea = {
+  nombre: "Tráquea",
+  ubicacion: "Conducto respiratorio situado entre la laringe y la bifurcación en los bronquios principales.",
+  funcion: "Conduce el aire hacia los bronquios principales. Sus anillos cartilaginosos ayudan a mantener abierta la vía respiratoria."
+};
+
+informacionAnatomica.VH_F_tracheal_cartilage = {
+  nombre: "Cartílago traqueal",
+  ubicacion: "Distribuido a lo largo de la pared de la tráquea.",
+  funcion: "Proporciona soporte y ayuda a evitar el colapso de la vía respiratoria."
+};
+
 const raycaster = new THREE.Raycaster();
 const puntero = new THREE.Vector2();
 cargador.load(
@@ -431,7 +493,13 @@ partes
     });
   });
     escena.add(modelo);
-
+traquea.position.set(0, 2.5, 0);
+escena.add(traquea);
+    traquea.traverse((objeto) => {
+  if (objeto.isMesh) {
+    partes.push(objeto);
+  }
+});
    mensaje.textContent = `Modelo cargado correctamente. ${partes.length} estructuras detectadas.`;
 
 console.log('Modelo cargado:', modelo);
