@@ -458,7 +458,11 @@ informacionAnatomica.VH_F_trachea = {
   ubicacion: "Conducto respiratorio situado entre la laringe y la bifurcación en los bronquios principales.",
   funcion: "Conduce el aire hacia los bronquios principales. Sus anillos cartilaginosos ayudan a mantener abierta la vía respiratoria."
 };
-
+informacionAnatomica.VH_F_main_bronchus = {
+  nombre: "Bronquios principales",
+  ubicacion: "Se originan en la bifurcación de la tráquea y se dirigen hacia el pulmón derecho y el izquierdo.",
+  funcion: "Conducen el aire desde la tráquea hacia cada pulmón y se ramifican en bronquios más pequeños."
+};
 informacionAnatomica.VH_F_tracheal_cartilage = {
   nombre: "Cartílago traqueal",
   ubicacion: "Distribuido a lo largo de la pared de la tráquea.",
