@@ -432,8 +432,8 @@ function crearRamaBronquial(inicio, fin, radio = 0.16) {
 }
 
 // Ramas bronquiales: versión inicial más corta
-crearRamaBronquial([0, -0.9, 0], [-0.45, -1.25, 0]);
-crearRamaBronquial([0, -0.9, 0], [0.45, -1.25, 0]);
+crearRamaBronquial([0, -0.9, 0], [-0.65, -1.65, 0]);
+crearRamaBronquial([0, -0.9, 0], [0.65, -1.65, 0]);
 
 // Anillos cartilaginosos
 for (let i = 0; i < 12; i++) {
