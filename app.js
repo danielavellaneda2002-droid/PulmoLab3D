@@ -431,9 +431,10 @@ function crearRamaBronquial(inicio, fin, radio = 0.16) {
   return rama;
 }
 
-// Las ramas parten de la zona inferior de la tráquea
-crearRamaBronquial([0, -0.9, 0], [-0.65, -1.65, 0]);
-crearRamaBronquial([0, -0.9, 0], [0.65, -1.65, 0]);
+// Ramas bronquiales: versión inicial más corta
+crearRamaBronquial([0, -0.9, 0], [-0.45, -1.25, 0]);
+crearRamaBronquial([0, -0.9, 0], [0.45, -1.25, 0]);
+
 // Anillos cartilaginosos
 for (let i = 0; i < 12; i++) {
   const geometriaAnillo = new THREE.TorusGeometry(
