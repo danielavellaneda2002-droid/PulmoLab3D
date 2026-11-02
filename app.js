@@ -663,6 +663,22 @@ function medirDistancia(nombre, extremo) {
   console.log("BRONQUIO:", nombre);
   console.log("DISTANCIA MÍNIMA:", distanciaMinima);
   console.log("PUNTO MÁS CERCANO:", puntoCercano.toArray());
+  const vectorConexion = puntoCercano.clone().sub(extremo);
+
+console.log(
+  "VECTOR DE CONEXIÓN:",
+  JSON.stringify(vectorConexion.toArray())
+);
+
+console.log(
+  "DIRECCIÓN NORMALIZADA:",
+  JSON.stringify(vectorConexion.clone().normalize().toArray())
+);
+
+console.log(
+  "PUNTO CERCANO EXACTO:",
+  JSON.stringify(puntoCercano.toArray())
+);
 }
 
 // Lado derecho
