@@ -559,6 +559,8 @@ console.log(
 console.log(
   "LÍMITE SUPERIOR PARED TRAQUEAL:",
   cajaPared.max.toArray()
+);
+
 // Actualizamos sus coordenadas globales
 traquea.updateMatrixWorld(true);
 
