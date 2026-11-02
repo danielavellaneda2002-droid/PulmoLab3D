@@ -636,7 +636,63 @@ console.log("MAXIMO:", caja.max.toArray());
     );
   }
 });
+// MEDIR DISTANCIA ENTRE BRONQUIOS PRINCIPALES Y LOBAR​ES
 
+function medirDistancia(nombre, extremo) {
+  const bronquio = partes.find(parte => parte.name === nombre);
+
+  if (!bronquio || !bronquio.geometry?.attributes?.position) {
+    console.log("No se encontró la geometría:", nombre);
+    return;
+  }
+
+  bronquio.updateWorldMatrix(true, false);
+
+  const posiciones = bronquio.geometry.attributes.position;
+
+  let distanciaMinima = Infinity;
+  let puntoCercano = new THREE.Vector3();
+
+  for (let i = 0; i < posiciones.count; i++) {
+    const vertice = new THREE.Vector3()
+      .fromBufferAttribute(posiciones, i);
+
+    vertice.applyMatrix4(bronquio.matrixWorld);
+
+    const distancia = extremo.distanceTo(vertice);
+
+    if (distancia < distanciaMinima) {
+      distanciaMinima = distancia;
+      puntoCercano.copy(vertice);
+    }
+  }
+
+  console.log("BRONQUIO:", nombre);
+  console.log("DISTANCIA MÍNIMA:", distanciaMinima);
+  console.log("PUNTO MÁS CERCANO:", puntoCercano.toArray());
+}
+
+// Lado derecho
+medirDistancia(
+  "VH_F_right_superior_lobar_bronchus",
+  extremoDerecho
+);
+
+medirDistancia(
+  "VH_F_right_inferior_lobar_bronchus",
+  extremoDerecho
+);
+
+// Lado izquierdo
+medirDistancia(
+  "VH_F_left_superior_lobar_bronchus",
+  extremoIzquierdo
+);
+
+medirDistancia(
+  "VH_F_left_inferior_lobar_bronchus",
+  extremoIzquierdo
+);
 
    mensaje.textContent = `Modelo cargado correctamente. ${partes.length} estructuras detectadas.`;
 
