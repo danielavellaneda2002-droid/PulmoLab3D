@@ -555,6 +555,27 @@ console.log(
     partes.push(objeto);
   }
 });
+    // COORDENADAS REALES DE LOS BRONQUIOS
+const nombresBronquios = [
+  "VH_F_left_superior_lobar_bronchus",
+  "VH_F_right_superior_lobar_bronchus",
+  "VH_F_left_inferior_lobar_bronchus",
+  "VH_F_right_inferior_lobar_bronchus"
+];
+
+nombresBronquios.forEach(nombre => {
+  const bronquio = partes.find(parte => parte.name === nombre);
+
+  if (bronquio) {
+    const caja = new THREE.Box3().setFromObject(bronquio);
+
+    console.log("COORDENADAS BRONQUIO:", nombre, {
+      minimo: caja.min,
+      maximo: caja.max
+    });
+  }
+});
+
    mensaje.textContent = `Modelo cargado correctamente. ${partes.length} estructuras detectadas.`;
 
 console.log('Modelo cargado:', modelo);
