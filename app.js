@@ -560,12 +560,18 @@ modelo.traverse((objeto) => {
 
   const nombre = objeto.name.toLowerCase();
 
-  const esBronquio =
-    nombre.includes("bronch") ||
-    nombre.includes("trach") ||
-    nombre.includes("cartilage");
+const esSegmentoPulmonar =
+  nombre.includes("segment") ||
+  nombre.includes("segmen");
 
-  objeto.visible = esBronquio;
+const esBronquio =
+  nombre.includes("bronchus") ||
+  nombre.includes("bronchi") ||
+  nombre.includes("bronchial") ||
+  nombre.includes("trach") ||
+  nombre.includes("cartilage");
+
+objeto.visible = esBronquio && !esSegmentoPulmonar;
 
 });
 
