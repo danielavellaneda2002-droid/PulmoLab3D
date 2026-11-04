@@ -1284,40 +1284,39 @@ function animar() {
     tiempoRespiratorio += delta;
 
     const frecuencia = frecuenciaRespiratoria / 60;
-
     const fase = tiempoRespiratorio * frecuencia * Math.PI * 2;
 
-    // Expansión suave durante la inspiración
     const expansion = 1 + 0.025 * (1 - Math.cos(fase)) / 2;
 
-escalasRespiratorias.forEach((escalaOriginal, estructura) => {
+    escalasRespiratorias.forEach((escalaOriginal, estructura) => {
 
-  estructura.scale.copy(escalaOriginal).multiplyScalar(expansion);
+      estructura.scale.copy(escalaOriginal).multiplyScalar(expansion);
 
-  const posicionOriginal = posicionesRespiratorias.get(estructura);
+      const posicionOriginal = posicionesRespiratorias.get(estructura);
 
-  if (posicionOriginal) {
+      if (posicionOriginal) {
 
-    estructura.position.copy(posicionOriginal);
+        estructura.position.copy(posicionOriginal);
 
-    estructura.position.x +=
-      (posicionOriginal.x - centroRespiratorio.x) * (expansion - 1);
+        estructura.position.x +=
+          (posicionOriginal.x - centroRespiratorio.x) * (expansion - 1);
 
-    estructura.position.y +=
-      (posicionOriginal.y - centroRespiratorio.y) * (expansion - 1);
+        estructura.position.y +=
+          (posicionOriginal.y - centroRespiratorio.y) * (expansion - 1);
 
-    estructura.position.z +=
-      (posicionOriginal.z - centroRespiratorio.z) * (expansion - 1);
+        estructura.position.z +=
+          (posicionOriginal.z - centroRespiratorio.z) * (expansion - 1);
 
-  }
+      }
 
-});
+    });
+
+  } // Cierra el if (respiracionActiva)
 
   controles.update();
-
   renderizador.render(escena, camara);
 
-}
+} 
 
 animar();
 
