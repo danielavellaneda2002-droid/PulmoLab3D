@@ -32,6 +32,16 @@ const cargador = new GLTFLoader();
 let modelo;
 let partes = [];
 let estructuraSeleccionada = null;
+// ======================================
+// CONTROL DE ARRASTRE ANATÓMICO
+// ======================================
+
+let modoArrastre = false;
+let arrastrando = false;
+
+const planoArrastre = new THREE.Plane();
+const puntoArrastre = new THREE.Vector3();
+const desplazamientoArrastre = new THREE.Vector3();
 // BASE DE DATOS ANATÓMICA - PULMÓN IZQUIERDO
 
 const informacionAnatomica = {
