@@ -1010,6 +1010,81 @@ console.log('Estructura resaltada:', nombre);
 
 
 });
+// ======================================
+// AISLAR, SEPARAR Y RESTAURAR ESTRUCTURAS
+// ======================================
+
+// Guardar las posiciones originales
+const posicionesOriginales = new Map();
+
+function guardarPosicionesOriginales() {
+  partes.forEach(parte => {
+    if (!posicionesOriginales.has(parte)) {
+      posicionesOriginales.set(parte, parte.position.clone());
+    }
+  });
+}
+
+function restaurarPosiciones() {
+  posicionesOriginales.forEach((posicion, parte) => {
+    parte.position.copy(posicion);
+  });
+}
+
+// Aislar estructura seleccionada
+document.getElementById("btnAislar").addEventListener("click", () => {
+
+  if (!estructuraSeleccionada) {
+    alert("Primero selecciona una estructura del modelo.");
+    return;
+  }
+
+  guardarPosicionesOriginales();
+
+  partes.forEach(parte => {
+    parte.visible = parte === estructuraSeleccionada;
+  });
+
+});
+
+// Separar estructura seleccionada
+document.getElementById("btnSeparar").addEventListener("click", () => {
+
+  if (!estructuraSeleccionada) {
+    alert("Primero selecciona una estructura del modelo.");
+    return;
+  }
+
+  guardarPosicionesOriginales();
+
+  const caja = new THREE.Box3().setFromObject(estructuraSeleccionada);
+  const centro = caja.getCenter(new THREE.Vector3());
+
+  const direccion = centro.clone().sub(new THREE.Vector3(0, 0, 0));
+
+  if (direccion.lengthSq() < 0.0001) {
+    direccion.set(1, 0, 0);
+  }
+
+  direccion.normalize();
+
+  const posicionOriginal = posicionesOriginales.get(estructuraSeleccionada);
+
+  estructuraSeleccionada.position.copy(posicionOriginal);
+  estructuraSeleccionada.position.addScaledVector(direccion, 0.5);
+
+});
+
+// Restaurar modelo
+document.getElementById("btnRestaurar").addEventListener("click", () => {
+
+  restaurarPosiciones();
+
+  partes.forEach(parte => {
+    parte.visible = true;
+  });
+
+});
 // Animación
 function animar() {
   requestAnimationFrame(animar);
