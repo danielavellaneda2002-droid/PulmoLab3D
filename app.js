@@ -1301,5 +1301,140 @@ function animar() {
 }
 
 animar();
+// ======================================
+// PANEL DE CONTROL RESPIRATORIO
+// ======================================
 
+// Crear panel
+const panelRespiratorio = document.createElement("div");
+
+panelRespiratorio.id = "panelRespiratorio";
+
+panelRespiratorio.style.cssText = `
+  background: #142438;
+  border: 1px solid #21b8d0;
+  border-radius: 12px;
+  padding: 15px;
+  margin: 15px 0;
+  color: white;
+  font-family: Arial, sans-serif;
+`;
+
+// Contenido del panel
+panelRespiratorio.innerHTML = `
+
+  <h3 style="color:#55d9ed; margin-top:0;">
+    🌬️ Control respiratorio
+  </h3>
+
+  <button id="btnRespiracion" style="
+    background:#1594aa;
+    color:white;
+    border:none;
+    padding:10px 15px;
+    border-radius:8px;
+    cursor:pointer;
+    margin-bottom:12px;
+  ">
+    ⏸️ Pausar respiración
+  </button>
+
+  <div style="margin-bottom:10px;">
+
+    <label>
+      Frecuencia respiratoria:
+      <strong id="valorFrecuencia">12 rpm</strong>
+    </label>
+
+  </div>
+
+  <input
+    type="range"
+    id="controlFrecuencia"
+    min="6"
+    max="30"
+    value="12"
+    step="1"
+    style="width:100%; cursor:pointer;"
+  >
+
+  <p id="duracionCiclo" style="margin-bottom:0;">
+    ⏱️ Duración del ciclo: 5 segundos
+  </p>
+
+`;
+
+// Insertar el panel debajo del mensaje del modelo
+mensaje.insertAdjacentElement("afterend", panelRespiratorio);
+
+
+// ======================================
+// BOTÓN INICIAR / PAUSAR
+// ======================================
+
+const btnRespiracion = document.getElementById("btnRespiracion");
+
+btnRespiracion.textContent = respiracionActiva
+  ? "⏸️ Pausar respiración"
+  : "▶️ Iniciar respiración";
+
+btnRespiracion.addEventListener("click", () => {
+
+  respiracionActiva = !respiracionActiva;
+
+  tiempoRespiratorio = 0;
+
+  // Al pausar, recuperar el tamaño original
+  if (!respiracionActiva && modelo) {
+    modelo.scale.setScalar(escalaOriginalModelo);
+  }
+
+  btnRespiracion.textContent = respiracionActiva
+    ? "⏸️ Pausar respiración"
+    : "▶️ Iniciar respiración";
+
+});
+
+
+// ======================================
+// CONTROL DE FRECUENCIA RESPIRATORIA
+// ======================================
+
+const controlFrecuencia = document.getElementById("controlFrecuencia");
+
+const valorFrecuencia = document.getElementById("valorFrecuencia");
+
+const duracionCiclo = document.getElementById("duracionCiclo");
+
+controlFrecuencia.value = frecuenciaRespiratoria;
+
+valorFrecuencia.textContent = frecuenciaRespiratoria + " rpm";
+
+duracionCiclo.textContent =
+  "⏱️ Duración del ciclo: " +
+  (60 / frecuenciaRespiratoria).toFixed(1) +
+  " segundos";
+
+controlFrecuencia.addEventListener("input", (evento) => {
+
+  frecuenciaRespiratoria = Number(evento.target.value);
+
+  // Reiniciar el ciclo con la nueva frecuencia
+  tiempoRespiratorio = 0;
+
+  if (modelo) {
+    modelo.scale.setScalar(escalaOriginalModelo);
+  }
+
+  valorFrecuencia.textContent =
+    frecuenciaRespiratoria + " rpm";
+
+  const duracion = 60 / frecuenciaRespiratoria;
+
+  duracionCiclo.textContent =
+    "⏱️ Duración del ciclo: " +
+    duracion.toFixed(1) +
+    " segundos";
+
+});
 
