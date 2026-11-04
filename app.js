@@ -33,6 +33,14 @@ let modelo;
 let partes = [];
 let estructuraSeleccionada = null;
 const posicionesOriginales = new Map();
+// CONTROL DE ANIMACIÓN RESPIRATORIA
+
+let respiracionActiva = true;
+let frecuenciaRespiratoria = 12;
+let tiempoRespiratorio = 0;
+
+const relojRespiratorio = new THREE.Clock();
+const escalasRespiratorias = new Map();
 // ======================================
 // CONTROL DE ARRASTRE ANATÓMICO
 // ======================================
@@ -688,6 +696,23 @@ console.log("LÍMITE SUPERIOR TRÁQUEA:",
 });
 // Guardar posiciones originales después de cargar las estructuras
 guardarPosicionesOriginales();    
+// Registrar segmentos pulmonares para animación
+modelo.traverse((objeto) => {
+
+  if (!objeto.isMesh) return;
+
+  const nombre = objeto.name.toLowerCase();
+
+  if (nombre.includes("bronchopulmonary_segment")) {
+    escalasRespiratorias.set(objeto, objeto.scale.clone());
+  }
+
+});
+
+console.log(
+  "Segmentos registrados para respiración:",
+  escalasRespiratorias.size
+);    
     // COORDENADAS REALES DE LOS BRONQUIOS
 const nombresBronquios = [
   "VH_F_left_superior_lobar_bronchus",
@@ -1214,12 +1239,41 @@ function terminarArrastre() {
 
 renderizador.domElement.addEventListener("pointerup", terminarArrastre);
 renderizador.domElement.addEventListener("pointercancel", terminarArrastre);
-// Animación
+// ======================================
+// ANIMACIÓN RESPIRATORIA
+// ======================================
+
 function animar() {
+
   requestAnimationFrame(animar);
+
+  const delta = relojRespiratorio.getDelta();
+
+  if (respiracionActiva) {
+
+    tiempoRespiratorio += delta;
+
+    const frecuencia = frecuenciaRespiratoria / 60;
+
+    const fase = tiempoRespiratorio * frecuencia * Math.PI * 2;
+
+    // Expansión suave durante la inspiración
+    const expansion = 1 + 0.025 * (1 - Math.cos(fase)) / 2;
+
+    escalasRespiratorias.forEach((escalaOriginal, estructura) => {
+
+      estructura.scale.copy(escalaOriginal).multiplyScalar(expansion);
+
+    });
+
+  }
+
   controles.update();
+
   renderizador.render(escena, camara);
+
 }
+
 animar();
 
 
