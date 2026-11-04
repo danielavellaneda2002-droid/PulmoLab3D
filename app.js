@@ -939,8 +939,8 @@ window.addEventListener('resize', ajustarTamano);
 // Detectar estructuras anatómicas al hacer clic
 renderizador.domElement.addEventListener('click', (evento) => {
   console.log('¡Clic detectado en el visor!');
-  if (!modelo) return;
 
+  if (!modelo || modoArrastre) return;
   const rect = renderizador.domElement.getBoundingClientRect();
 
   puntero.x = ((evento.clientX - rect.left) / rect.width) * 2 - 1;
@@ -1095,6 +1095,96 @@ document.getElementById("btnRestaurar").addEventListener("click", () => {
   });
 
 });
+// ======================================
+// ACTIVAR Y DESACTIVAR ARRASTRE
+// ======================================
+
+const btnArrastrar = document.getElementById("btnArrastrar");
+
+btnArrastrar.addEventListener("click", () => {
+  modoArrastre = !modoArrastre;
+
+  btnArrastrar.textContent = modoArrastre
+    ? "✋ Desactivar arrastre"
+    : "✋ Activar arrastre";
+
+  if (!modoArrastre) {
+    arrastrando = false;
+    controles.enabled = true;
+  }
+});
+// ======================================
+// ARRASTRAR ESTRUCTURAS CON EL MOUSE
+// ======================================
+
+renderizador.domElement.addEventListener("pointerdown", (evento) => {
+  if (!modoArrastre || !modelo) return;
+
+  const rect = renderizador.domElement.getBoundingClientRect();
+
+  puntero.x = ((evento.clientX - rect.left) / rect.width) * 2 - 1;
+  puntero.y = -((evento.clientY - rect.top) / rect.height) * 2 + 1;
+
+  raycaster.setFromCamera(puntero, camara);
+
+  const objetosVisibles = partes.filter(parte => parte.visible);
+  const intersecciones = raycaster.intersectObjects(objetosVisibles, false);
+
+  if (intersecciones.length === 0) return;
+
+  estructuraSeleccionada = intersecciones[0].object;
+  arrastrando = true;
+
+  controles.enabled = false;
+
+  const centro = new THREE.Box3()
+    .setFromObject(estructuraSeleccionada)
+    .getCenter(new THREE.Vector3());
+
+  planoArrastre.setFromNormalAndCoplanarPoint(
+    camara.getWorldDirection(new THREE.Vector3()),
+    centro
+  );
+
+  if (raycaster.ray.intersectPlane(planoArrastre, puntoArrastre)) {
+    desplazamientoArrastre.copy(
+      estructuraSeleccionada.getWorldPosition(new THREE.Vector3())
+    ).sub(puntoArrastre);
+  }
+
+  renderizador.domElement.setPointerCapture(evento.pointerId);
+});
+
+renderizador.domElement.addEventListener("pointermove", (evento) => {
+  if (!arrastrando || !estructuraSeleccionada) return;
+
+  const rect = renderizador.domElement.getBoundingClientRect();
+
+  puntero.x = ((evento.clientX - rect.left) / rect.width) * 2 - 1;
+  puntero.y = -((evento.clientY - rect.top) / rect.height) * 2 + 1;
+
+  raycaster.setFromCamera(puntero, camara);
+
+  if (raycaster.ray.intersectPlane(planoArrastre, puntoArrastre)) {
+    const posicionMundo = puntoArrastre.clone().add(desplazamientoArrastre);
+
+    if (estructuraSeleccionada.parent) {
+      estructuraSeleccionada.parent.worldToLocal(posicionMundo);
+    }
+
+    estructuraSeleccionada.position.copy(posicionMundo);
+  }
+});
+
+function terminarArrastre() {
+  if (!arrastrando) return;
+
+  arrastrando = false;
+  controles.enabled = true;
+}
+
+renderizador.domElement.addEventListener("pointerup", terminarArrastre);
+renderizador.domElement.addEventListener("pointercancel", terminarArrastre);
 // Animación
 function animar() {
   requestAnimationFrame(animar);
