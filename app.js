@@ -41,6 +41,11 @@ let tiempoRespiratorio = 0;
 
 const relojRespiratorio = new THREE.Clock();
 const escalasRespiratorias = new Map();
+// Centro común de expansión pulmonar
+const centroRespiratorio = new THREE.Vector3();
+
+// Guardar posiciones para animación respiratoria
+const posicionesRespiratorias = new Map();
 // ======================================
 // CONTROL DE ARRASTRE ANATÓMICO
 // ======================================
@@ -696,7 +701,14 @@ console.log("LÍMITE SUPERIOR TRÁQUEA:",
 });
 // Guardar posiciones originales después de cargar las estructuras
 guardarPosicionesOriginales();    
-// Registrar segmentos pulmonares para animación
+// ======================================
+// REGISTRAR SEGMENTOS PARA RESPIRACIÓN
+// ======================================
+
+modelo.updateMatrixWorld(true);
+
+const cajaPulmonar = new THREE.Box3();
+
 modelo.traverse((objeto) => {
 
   if (!objeto.isMesh) return;
@@ -704,10 +716,28 @@ modelo.traverse((objeto) => {
   const nombre = objeto.name.toLowerCase();
 
   if (nombre.includes("bronchopulmonary_segment")) {
+
     escalasRespiratorias.set(objeto, objeto.scale.clone());
+
+    posicionesRespiratorias.set(
+      objeto,
+      objeto.position.clone()
+    );
+
+    cajaPulmonar.expandByObject(objeto);
+
   }
 
 });
+
+if (!cajaPulmonar.isEmpty()) {
+  cajaPulmonar.getCenter(centroRespiratorio);
+}
+
+console.log(
+  "Segmentos registrados:",
+  escalasRespiratorias.size
+);
 
 console.log(
   "Segmentos registrados para respiración:",
@@ -1260,13 +1290,28 @@ function animar() {
     // Expansión suave durante la inspiración
     const expansion = 1 + 0.025 * (1 - Math.cos(fase)) / 2;
 
-    escalasRespiratorias.forEach((escalaOriginal, estructura) => {
+escalasRespiratorias.forEach((escalaOriginal, estructura) => {
 
-      estructura.scale.copy(escalaOriginal).multiplyScalar(expansion);
+  estructura.scale.copy(escalaOriginal).multiplyScalar(expansion);
 
-    });
+  const posicionOriginal = posicionesRespiratorias.get(estructura);
+
+  if (posicionOriginal) {
+
+    estructura.position.copy(posicionOriginal);
+
+    estructura.position.x +=
+      (posicionOriginal.x - centroRespiratorio.x) * (expansion - 1);
+
+    estructura.position.y +=
+      (posicionOriginal.y - centroRespiratorio.y) * (expansion - 1);
+
+    estructura.position.z +=
+      (posicionOriginal.z - centroRespiratorio.z) * (expansion - 1);
 
   }
+
+});
 
   controles.update();
 
