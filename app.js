@@ -567,6 +567,12 @@ traquea.localToWorld(extremoDerecho);
 // Extremo actual del bronquio principal izquierdo
 const extremoIzquierdo = new THREE.Vector3(0.889, -1.878, -0.164);
 traquea.localToWorld(extremoIzquierdo);
+ // Extremos de las conexiones bronquiales inferiores
+const extremoInferiorDerecho = new THREE.Vector3(-0.927,-2.702,-0.441);
+traquea.localToWorld(extremoInferiorDerecho);
+
+const extremoInferiorIzquierdo = new THREE.Vector3(1.053,-2.471,-0.574);
+traquea.localToWorld(extremoInferiorIzquierdo);   
 
 console.log("EXTREMO DERECHO ACTUAL:", extremoDerecho.toArray());
 console.log("EXTREMO IZQUIERDO ACTUAL:", extremoIzquierdo.toArray());
@@ -715,26 +721,12 @@ console.log(
 }
 
 // Lado derecho
-medirDistancia(
-  "VH_F_right_superior_lobar_bronchus",
-  extremoDerecho
-);
-
-medirDistancia(
-  "VH_F_right_inferior_lobar_bronchus",
-  extremoDerecho
-);
+medirDistancia("VH_F_right_superior_lobar_bronchus", extremoDerecho);
+medirDistancia("VH_F_right_inferior_lobar_bronchus", extremoInferiorDerecho);
 
 // Lado izquierdo
-medirDistancia(
-  "VH_F_left_superior_lobar_bronchus",
-  extremoIzquierdo
-);
-
-medirDistancia(
-  "VH_F_left_inferior_lobar_bronchus",
-  extremoIzquierdo
-);
+medirDistancia("VH_F_left_superior_lobar_bronchus", extremoIzquierdo);
+medirDistancia("VH_F_left_inferior_lobar_bronchus", extremoInferiorIzquierdo);
 // ======================================
 // PCA: EJES LONGITUDINALES BRONQUIALES
 // ======================================
