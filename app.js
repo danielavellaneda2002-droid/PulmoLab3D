@@ -30,6 +30,7 @@ controles.dampingFactor = 0.05;
 
 const cargador = new GLTFLoader();
 let modelo;
+let escalaOriginalModelo = 1;
 let partes = [];
 let estructuraSeleccionada = null;
 const posicionesOriginales = new Map();
@@ -531,6 +532,7 @@ const dimensionMayor = Math.max(tamano.x, tamano.y, tamano.z);
 const escala = 5 / dimensionMayor;
 
 modelo.scale.setScalar(escala);
+escalaOriginalModelo = escala;    
 modelo.updateMatrixWorld(true);
 
 // Centrar después de aplicar la escala
@@ -1279,7 +1281,7 @@ function animar() {
 
   const delta = relojRespiratorio.getDelta();
 
-  if (respiracionActiva) {
+  if (respiracionActiva && modelo) {
 
     tiempoRespiratorio += delta;
 
@@ -1288,35 +1290,15 @@ function animar() {
 
     const expansion = 1 + 0.025 * (1 - Math.cos(fase)) / 2;
 
-    escalasRespiratorias.forEach((escalaOriginal, estructura) => {
+    // Animación conjunta de todo el modelo
+    modelo.scale.setScalar(escalaOriginalModelo * expansion);
 
-      estructura.scale.copy(escalaOriginal).multiplyScalar(expansion);
-
-      const posicionOriginal = posicionesRespiratorias.get(estructura);
-
-      if (posicionOriginal) {
-
-        estructura.position.copy(posicionOriginal);
-
-        estructura.position.x +=
-          (posicionOriginal.x - centroRespiratorio.x) * (expansion - 1);
-
-        estructura.position.y +=
-          (posicionOriginal.y - centroRespiratorio.y) * (expansion - 1);
-
-        estructura.position.z +=
-          (posicionOriginal.z - centroRespiratorio.z) * (expansion - 1);
-
-      }
-
-    });
-
-  } // Cierra el if (respiracionActiva)
+  }
 
   controles.update();
   renderizador.render(escena, camara);
 
-} 
+}
 
 animar();
 
