@@ -52,20 +52,74 @@
             color: #67dce8;
         }
 
-        #visor {
-    min-height: 500px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
+  /* CONTENEDOR PRINCIPAL DEL SIMULADOR */
+
+#visor {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    gap: 25px;
+    align-items: start;
     background: radial-gradient(circle, #203b55, #101a2a);
-    padding: 20px;
+    padding: 25px;
+    min-height: 550px;
 }
+
+/* MODELO ANATÓMICO */
 
 #contenedor3D {
     width: 100%;
-    max-width: 1000px;
     min-width: 0;
+    text-align: center;
+    overflow: hidden;
+}
+
+#contenedor3D canvas {
+    display: block;
+    width: 100% !important;
+    max-width: 100%;
+    height: auto !important;
+}
+
+/* INFORMACIÓN ANATÓMICA */
+
+#fichaAnatomica {
+    width: 100%;
+    min-width: 0;
+    padding: 20px;
+    background: rgba(11, 18, 32, 0.45);
+    border-radius: 12px;
+    text-align: left;
+    overflow-wrap: anywhere;
+}
+
+#nombreEstructura {
+    color: #67dce8;
+    font-size: 22px;
+    margin-top: 0;
+}
+
+#fichaAnatomica p {
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+/* ADAPTACIÓN PARA CELULARES */
+
+@media (max-width: 768px) {
+
+    #visor {
+        grid-template-columns: 1fr;
+        padding: 15px;
+    }
+
+    #contenedor3D {
+        width: 100%;
+    }
+
+    #fichaAnatomica {
+        width: 100%;
+        padding: 15px;
+    }
 }
 
         button {
