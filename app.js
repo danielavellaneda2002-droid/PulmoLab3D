@@ -399,35 +399,37 @@ traquea.add(paredTraquea);
 
 // Bifurcación de la tráquea hacia los bronquios principales
 function crearRamaBronquial(inicio, fin, radio = 0.16) {
+
   const puntoInicio = new THREE.Vector3(...inicio);
   const puntoFin = new THREE.Vector3(...fin);
 
-  const direccion = new THREE.Vector3()
-    .subVectors(puntoFin, puntoInicio);
+  // Punto intermedio
+  const puntoMedio = puntoInicio.clone()
+    .lerp(puntoFin, 0.5);
 
-const geometria = new THREE.CylinderGeometry(
-  radio * 0.85,
-  radio,
-  direccion.length() + 0.12,
-  32,
-  1,
-  false
-);
+  // Trayectoria del bronquio
+  const curva = new THREE.CatmullRomCurve3([
+    puntoInicio,
+    puntoMedio,
+    puntoFin
+  ]);
+
+  // Crear tubo
+  const geometria = new THREE.TubeGeometry(
+    curva,
+    32,
+    radio,
+    16,
+    false
+  );
+
   const rama = new THREE.Mesh(
     geometria,
     materialTraquea
   );
 
-  rama.position.copy(
-    puntoInicio.clone().add(puntoFin).multiplyScalar(0.5)
-  );
-
-  rama.quaternion.setFromUnitVectors(
-    new THREE.Vector3(0, 1, 0),
-    direccion.normalize()
-  );
-
   rama.name = "VH_F_main_bronchus";
+
   traquea.add(rama);
 
   return rama;
