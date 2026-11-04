@@ -553,6 +553,14 @@ partes
     });
   });
    escena.add(modelo);
+modelo.traverse((objeto) => {
+  if (
+    objeto.isMesh &&
+    objeto.name.includes("bronchopulmonary_segment")
+  ) {
+    objeto.visible = false;
+  }
+});
 
 traquea.position.set(0, 2.5, 0);
 
