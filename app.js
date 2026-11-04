@@ -553,13 +553,20 @@ partes
     });
   });
    escena.add(modelo);
+// MODO TEMPORAL DE INSPECCIÓN BRONQUIAL
 modelo.traverse((objeto) => {
-  if (
-    objeto.isMesh &&
-    objeto.name.includes("bronchopulmonary_segment")
-  ) {
-    objeto.visible = false;
-  }
+
+  if (!objeto.isMesh) return;
+
+  const nombre = objeto.name.toLowerCase();
+
+  const esBronquio =
+    nombre.includes("bronch") ||
+    nombre.includes("trach") ||
+    nombre.includes("cartilage");
+
+  objeto.visible = esBronquio;
+
 });
 
 traquea.position.set(0, 2.5, 0);
