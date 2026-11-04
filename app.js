@@ -437,6 +437,21 @@ crearRamaBronquial([0, -0.9, 0], [-0.680, -1.777, -0.096]);
 
 // Bronquio principal izquierdo
 crearRamaBronquial([0, -0.9, 0], [0.889, -1.878, -0.164]);
+// CONEXIONES HACIA LOS BRONQUIOS LOBAR​ES INFERIORES
+
+// Bronquio lobar inferior derecho
+crearRamaBronquial(
+  [-0.680, -1.777, -0.096],
+  [-0.927, -2.702, -0.441],
+  0.13
+);
+
+// Bronquio lobar inferior izquierdo
+crearRamaBronquial(
+  [0.889, -1.878, -0.164],
+  [1.053, -2.471, -0.574],
+  0.13
+);
 
 // Anillos cartilaginosos
 for (let i = 0; i < 12; i++) {
