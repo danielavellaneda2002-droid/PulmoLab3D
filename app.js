@@ -405,13 +405,14 @@ function crearRamaBronquial(inicio, fin, radio = 0.16) {
   const direccion = new THREE.Vector3()
     .subVectors(puntoFin, puntoInicio);
 
-  const geometria = new THREE.CylinderGeometry(
-    radio * 0.75,
-    radio,
-    direccion.length(),
-    24
-  );
-
+const geometria = new THREE.CylinderGeometry(
+  radio * 0.85,
+  radio,
+  direccion.length() + 0.12,
+  32,
+  1,
+  false
+);
   const rama = new THREE.Mesh(
     geometria,
     materialTraquea
