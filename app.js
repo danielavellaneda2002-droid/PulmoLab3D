@@ -735,7 +735,112 @@ medirDistancia(
   "VH_F_left_inferior_lobar_bronchus",
   extremoIzquierdo
 );
+// ======================================
+// PCA: EJES LONGITUDINALES BRONQUIALES
+// ======================================
 
+function calcularEjePCA(nombre) {
+
+  const bronquio = partes.find(p => p.name === nombre);
+
+  if (!bronquio || !bronquio.geometry?.attributes?.position) {
+    console.error("No se encontró:", nombre);
+    return;
+  }
+
+  bronquio.updateWorldMatrix(true, false);
+
+  const posiciones = bronquio.geometry.attributes.position;
+  const puntos = [];
+
+  const centro = new THREE.Vector3();
+
+  for (let i = 0; i < posiciones.count; i++) {
+
+    const punto = new THREE.Vector3()
+      .fromBufferAttribute(posiciones, i)
+      .applyMatrix4(bronquio.matrixWorld);
+
+    puntos.push(punto);
+    centro.add(punto);
+  }
+
+  centro.divideScalar(puntos.length);
+
+  // Matriz de covarianza
+  let xx = 0, xy = 0, xz = 0;
+  let yy = 0, yz = 0, zz = 0;
+
+  puntos.forEach(p => {
+
+    const x = p.x - centro.x;
+    const y = p.y - centro.y;
+    const z = p.z - centro.z;
+
+    xx += x * x;
+    xy += x * y;
+    xz += x * z;
+    yy += y * y;
+    yz += y * z;
+    zz += z * z;
+
+  });
+
+  const matriz = [
+    [xx, xy, xz],
+    [xy, yy, yz],
+    [xz, yz, zz]
+  ];
+
+  // Iteración de potencia para obtener el eje principal
+  let eje = new THREE.Vector3(1, 1, 1).normalize();
+
+  for (let i = 0; i < 100; i++) {
+
+    const nuevo = new THREE.Vector3(
+      matriz[0][0] * eje.x + matriz[0][1] * eje.y + matriz[0][2] * eje.z,
+      matriz[1][0] * eje.x + matriz[1][1] * eje.y + matriz[1][2] * eje.z,
+      matriz[2][0] * eje.x + matriz[2][1] * eje.y + matriz[2][2] * eje.z
+    );
+
+    if (nuevo.lengthSq() < 1e-12) break;
+
+    eje.copy(nuevo.normalize());
+  }
+
+  let minimo = Infinity;
+  let maximo = -Infinity;
+
+  puntos.forEach(p => {
+
+    const proyeccion = p.clone()
+      .sub(centro)
+      .dot(eje);
+
+    minimo = Math.min(minimo, proyeccion);
+    maximo = Math.max(maximo, proyeccion);
+
+  });
+
+  const extremo1 = centro.clone().addScaledVector(eje, minimo);
+  const extremo2 = centro.clone().addScaledVector(eje, maximo);
+
+  console.log("========== PCA ==========");
+  console.log("BRONQUIO:", nombre);
+  console.log("CENTRO:", centro.toArray());
+  console.log("EJE:", eje.toArray());
+  console.log("EXTREMO 1:", extremo1.toArray());
+  console.log("EXTREMO 2:", extremo2.toArray());
+  console.log("LONGITUD PROYECTADA:", maximo - minimo);
+
+}
+
+// Calcular los cuatro bronquios lobares
+
+calcularEjePCA("VH_F_left_superior_lobar_bronchus");
+calcularEjePCA("VH_F_left_inferior_lobar_bronchus");
+calcularEjePCA("VH_F_right_superior_lobar_bronchus");
+calcularEjePCA("VH_F_right_inferior_lobar_bronchus");
    mensaje.textContent = `Modelo cargado correctamente. ${partes.length} estructuras detectadas.`;
 
 console.log('Modelo cargado:', modelo);
