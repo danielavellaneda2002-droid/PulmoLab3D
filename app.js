@@ -32,6 +32,7 @@ const cargador = new GLTFLoader();
 let modelo;
 let partes = [];
 let estructuraSeleccionada = null;
+const posicionesOriginales = new Map();
 // ======================================
 // CONTROL DE ARRASTRE ANATÓMICO
 // ======================================
@@ -685,6 +686,8 @@ console.log("LÍMITE SUPERIOR TRÁQUEA:",
     partes.push(objeto);
   }
 });
+// Guardar posiciones originales después de cargar las estructuras
+guardarPosicionesOriginales();    
     // COORDENADAS REALES DE LOS BRONQUIOS
 const nombresBronquios = [
   "VH_F_left_superior_lobar_bronchus",
@@ -1025,7 +1028,6 @@ console.log('Estructura resaltada:', nombre);
 // ======================================
 
 // Guardar las posiciones originales
-const posicionesOriginales = new Map();
 
 function guardarPosicionesOriginales() {
   partes.forEach(parte => {
@@ -1034,12 +1036,26 @@ function guardarPosicionesOriginales() {
     }
   });
 }
+// ======================================
+// RESTAURAR POSICIONES ORIGINALES
+// ======================================
 
 function restaurarPosiciones() {
+
   posicionesOriginales.forEach((posicion, parte) => {
     parte.position.copy(posicion);
   });
+
+  if (modelo) {
+    modelo.updateMatrixWorld(true);
+  }
+
+  traquea.updateMatrixWorld(true);
+
+  console.log("Posiciones anatómicas restauradas");
+
 }
+
 
 // Aislar estructura seleccionada
 document.getElementById("btnAislar").addEventListener("click", () => {
@@ -1088,11 +1104,22 @@ document.getElementById("btnSeparar").addEventListener("click", () => {
 // Restaurar modelo
 document.getElementById("btnRestaurar").addEventListener("click", () => {
 
+  // Detener cualquier arrastre activo
+  arrastrando = false;
+  controles.enabled = true;
+
+  // Recuperar posiciones originales
   restaurarPosiciones();
 
+  // Mostrar nuevamente las estructuras
   partes.forEach(parte => {
     parte.visible = true;
   });
+
+  // Actualizar matrices del modelo
+  modelo.updateMatrixWorld(true);
+
+  console.log("Modelo restaurado correctamente");
 
 });
 // ======================================
@@ -1132,11 +1159,13 @@ renderizador.domElement.addEventListener("pointerdown", (evento) => {
 
   if (intersecciones.length === 0) return;
 
-  estructuraSeleccionada = intersecciones[0].object;
-  arrastrando = true;
+// Guardar las posiciones antes del primer movimiento
+guardarPosicionesOriginales();
 
-  controles.enabled = false;
+estructuraSeleccionada = intersecciones[0].object;
+arrastrando = true;
 
+controles.enabled = false;
   const centro = new THREE.Box3()
     .setFromObject(estructuraSeleccionada)
     .getCenter(new THREE.Vector3());
