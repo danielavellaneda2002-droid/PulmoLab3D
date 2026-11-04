@@ -556,28 +556,54 @@ partes
     });
   });
    escena.add(modelo);
-// MODO TEMPORAL DE INSPECCIÓN BRONQUIAL
+// ======================================
+// MODOS DE VISUALIZACIÓN ANATÓMICA
+// ======================================
+
+// Guardar la visibilidad original de cada estructura
+const visibilidadOriginal = new Map();
+
 modelo.traverse((objeto) => {
+  if (objeto.isMesh) {
+    visibilidadOriginal.set(objeto, objeto.visible);
+  }
+});
 
-  if (!objeto.isMesh) return;
+// Mostrar pulmones completos
+document.getElementById("btnPulmones").addEventListener("click", () => {
 
-  const nombre = objeto.name.toLowerCase();
-
-const esSegmentoPulmonar =
-  nombre.includes("segment") ||
-  nombre.includes("segmen");
-
-const esBronquio =
-  nombre.includes("bronchus") ||
-  nombre.includes("bronchi") ||
-  nombre.includes("bronchial") ||
-  nombre.includes("trach") ||
-  nombre.includes("cartilage");
-
-objeto.visible = esBronquio && !esSegmentoPulmonar;
+  modelo.traverse((objeto) => {
+    if (objeto.isMesh) {
+      objeto.visible = visibilidadOriginal.get(objeto);
+    }
+  });
 
 });
 
+// Mostrar únicamente el árbol bronquial
+document.getElementById("btnBronquios").addEventListener("click", () => {
+
+  modelo.traverse((objeto) => {
+
+    if (!objeto.isMesh) return;
+
+    const nombre = objeto.name.toLowerCase();
+
+    const esSegmentoPulmonar =
+      nombre.includes("segment");
+
+    const esBronquio =
+      nombre.includes("bronchus") ||
+      nombre.includes("bronchi") ||
+      nombre.includes("bronchial") ||
+      nombre.includes("trach") ||
+      nombre.includes("cartilage");
+
+    objeto.visible = esBronquio && !esSegmentoPulmonar;
+
+  });
+
+});
 traquea.position.set(0, 2.5, 0);
 
 // Primero agregamos la tráquea a la escena
