@@ -1339,6 +1339,82 @@ function actualizarPanelFisiologico(fase) {
     flujoActual.toFixed(1) + " L/min";
 
 }
+// MECÁNICA RESPIRATORIA
+// PRESIÓN Y DISTENSIBILIDAD
+// ======================================
+
+// Valores de referencia para la simulación
+const mecanicaRespiratoria = {
+    peep: 5,              // cmH2O
+    distensibilidad: 50,  // mL/cmH2O
+    resistencia: 10       // cmH2O/(L/s)
+};
+
+// Conectar las tarjetas del HTML
+const indicadoresPresion = {
+    peep: document.getElementById("fisPEEP"),
+    pplat: document.getElementById("fisPplat"),
+    pip: document.getElementById("fisPIP"),
+    distensibilidad: document.getElementById("fisDistensibilidad")
+};
+
+// Actualizar parámetros de presión
+function actualizarPanelPresiones() {
+
+    if (Object.values(indicadoresPresion).some(elemento => !elemento)) {
+        return;
+    }
+
+    const peep = mecanicaRespiratoria.peep;
+
+    const distensibilidad =
+        mecanicaRespiratoria.distensibilidad;
+
+    const resistencia =
+        mecanicaRespiratoria.resistencia;
+
+    // Presión meseta teórica
+    // Pplat = PEEP + VT / C
+    const presionMeseta =
+        peep + volumenCorriente / distensibilidad;
+
+    // Amplitud de presión elástica
+    const amplitudElastica =
+        volumenCorriente / (2 * distensibilidad);
+
+    // Flujo inspiratorio máximo (L/s)
+    const flujoPico =
+        (volumenCorriente / 1000) *
+        Math.PI *
+        frecuenciaRespiratoria / 60;
+
+    // Amplitud de presión resistiva
+    const amplitudResistiva =
+        resistencia * flujoPico;
+
+    // Presión pico teórica para flujo sinusoidal
+    const presionPico =
+        peep +
+        amplitudElastica +
+        Math.hypot(
+            amplitudElastica,
+            amplitudResistiva
+        );
+
+    // Actualizar las tarjetas
+    indicadoresPresion.peep.textContent =
+        peep.toFixed(1) + " cmH₂O";
+
+    indicadoresPresion.pplat.textContent =
+        presionMeseta.toFixed(1) + " cmH₂O";
+
+    indicadoresPresion.pip.textContent =
+        presionPico.toFixed(1) + " cmH₂O";
+
+    indicadoresPresion.distensibilidad.textContent =
+        distensibilidad.toFixed(0) + " mL/cmH₂O";
+
+}
 // ======================================
 // GRÁFICAS RESPIRATORIAS SINCRONIZADAS
 // ======================================
