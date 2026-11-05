@@ -1383,12 +1383,6 @@ function animar() {
 }
 
 animar();
-  controles.update();
-  renderizador.render(escena, camara);
-
-}
-
-animar();
 // ======================================
 // PANEL DE CONTROL RESPIRATORIO
 // ======================================
