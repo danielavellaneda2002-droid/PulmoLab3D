@@ -1272,7 +1272,75 @@ function terminarArrastre() {
 renderizador.domElement.addEventListener("pointerup", terminarArrastre);
 renderizador.domElement.addEventListener("pointercancel", terminarArrastre);
 // ======================================
-// ANIMACIÓN RESPIRATORIA
+// CÁLCULOS FISIOLÓGICOS RESPIRATORIOS
+// ======================================
+
+// Volumen corriente de referencia (mL)
+const volumenCorriente = 500;
+
+// Conectar los indicadores del HTML
+const indicadores = {
+  frecuencia: document.getElementById("fisFrecuencia"),
+  volumenCorriente: document.getElementById("fisVolumenCorriente"),
+  tiempoInspiratorio: document.getElementById("fisTiempoInspiratorio"),
+  tiempoEspiratorio: document.getElementById("fisTiempoEspiratorio"),
+  ventilacionMinuto: document.getElementById("fisVentilacionMinuto"),
+  volumenActual: document.getElementById("fisVolumenActual"),
+  flujoActual: document.getElementById("fisFlujoActual")
+};
+
+// Actualizar los parámetros fisiológicos
+function actualizarPanelFisiologico(fase) {
+
+  if (Object.values(indicadores).some(elemento => !elemento)) {
+    return;
+  }
+
+  // Duración del ciclo respiratorio
+  const duracionCiclo = 60 / frecuenciaRespiratoria;
+
+  // Relación inspiración:espiración de 1:1
+  const tiempoInspiratorio = duracionCiclo / 2;
+  const tiempoEspiratorio = duracionCiclo / 2;
+
+  // Ventilación minuto (L/min)
+  const ventilacionMinuto =
+    (volumenCorriente * frecuenciaRespiratoria) / 1000;
+
+  // Volumen instantáneo simulado (mL)
+  const volumenActual =
+    (volumenCorriente / 2) * (1 - Math.cos(fase));
+
+  // Flujo instantáneo simulado (L/min)
+  const flujoActual =
+    (volumenCorriente * Math.PI * frecuenciaRespiratoria / 1000)
+    * Math.sin(fase);
+
+  // Actualizar valores en pantalla
+  indicadores.frecuencia.textContent =
+    frecuenciaRespiratoria + " rpm";
+
+  indicadores.volumenCorriente.textContent =
+    volumenCorriente + " mL";
+
+  indicadores.tiempoInspiratorio.textContent =
+    tiempoInspiratorio.toFixed(1) + " s";
+
+  indicadores.tiempoEspiratorio.textContent =
+    tiempoEspiratorio.toFixed(1) + " s";
+
+  indicadores.ventilacionMinuto.textContent =
+    ventilacionMinuto.toFixed(1) + " L/min";
+
+  indicadores.volumenActual.textContent =
+    volumenActual.toFixed(0) + " mL";
+
+  indicadores.flujoActual.textContent =
+    flujoActual.toFixed(1) + " L/min";
+
+}
+// ======================================
+// ANIMACIÓN RESPIRATORIA SINCRONIZADA
 // ======================================
 
 function animar() {
@@ -1286,15 +1354,35 @@ function animar() {
     tiempoRespiratorio += delta;
 
     const frecuencia = frecuenciaRespiratoria / 60;
-    const fase = tiempoRespiratorio * frecuencia * Math.PI * 2;
 
-    const expansion = 1 + 0.025 * (1 - Math.cos(fase)) / 2;
+    const fase =
+      tiempoRespiratorio * frecuencia * Math.PI * 2;
 
-    // Animación conjunta de todo el modelo
-    modelo.scale.setScalar(escalaOriginalModelo * expansion);
+    const expansion =
+      1 + 0.025 * (1 - Math.cos(fase)) / 2;
+
+    // Mantener la animación pulmonar
+    modelo.scale.setScalar(
+      escalaOriginalModelo * expansion
+    );
+
+    // Sincronizar parámetros fisiológicos
+    actualizarPanelFisiologico(fase);
+
+  } else {
+
+    // Mostrar valores iniciales cuando esté pausado
+    actualizarPanelFisiologico(0);
 
   }
 
+  controles.update();
+
+  renderizador.render(escena, camara);
+
+}
+
+animar();
   controles.update();
   renderizador.render(escena, camara);
 
