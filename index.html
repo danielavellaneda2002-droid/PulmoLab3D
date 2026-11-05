@@ -4,6 +4,56 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PulmoLab 3D</title>
+/*LABORATORIO FISIOLÓGICO*/
+
+#laboratorioFisica {
+    background: #142137;
+    border: 1px solid #30445d;
+    border-radius: 15px;
+    padding: 25px;
+}
+
+#panelFisiologico {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.datoFisiologico {
+    background: #0e1b2d;
+    border: 1px solid #30445d;
+    border-radius: 12px;
+    padding: 20px;
+    transition: 0.3s;
+}
+
+.datoFisiologico:hover {
+    border-color: #67dce8;
+}
+
+.datoFisiologico span {
+    display: block;
+    color: #b4c4d8;
+    font-size: 14px;
+    margin-bottom: 12px;
+}
+
+.datoFisiologico strong {
+    display: block;
+    color: #67dce8;
+    font-size: 24px;
+}
+
+.notaFisiologica {
+    margin-top: 25px;
+    padding: 15px;
+    background: rgba(103, 220, 232, 0.08);
+    border-left: 3px solid #67dce8;
+    border-radius: 6px;
+    color: #b4c4d8;
+    font-size: 14px;
+}
 
     <style>
         * {
@@ -217,14 +267,68 @@
 
 
 
-        <section>
-            <h2>Laboratorio de Física</h2>
+      <!-- ===================================== -->
+<!-- LABORATORIO DE FÍSICA RESPIRATORIA -->
+<!-- ===================================== -->
 
-            <p>
-                En esta sección estudiaremos presión,
-                volumen y flujo de aire.
-            </p>
-        </section>
+<section id="laboratorioFisica">
+
+    <h2>🌬️ Laboratorio de Física Respiratoria</h2>
+
+    <p>
+        Explora los principios físicos de la ventilación pulmonar.
+        Observa cómo cambian los parámetros respiratorios
+        durante la inspiración y la espiración.
+    </p>
+
+    <h3>📊 Parámetros fisiológicos</h3>
+
+    <div id="panelFisiologico">
+
+        <div class="datoFisiologico">
+            <span>Frecuencia respiratoria</span>
+            <strong id="fisFrecuencia">12 rpm</strong>
+        </div>
+
+        <div class="datoFisiologico">
+            <span>Volumen corriente (VT)</span>
+            <strong id="fisVolumenCorriente">500 mL</strong>
+        </div>
+
+        <div class="datoFisiologico">
+            <span>Tiempo inspiratorio</span>
+            <strong id="fisTiempoInspiratorio">2.5 s</strong>
+        </div>
+
+        <div class="datoFisiologico">
+            <span>Tiempo espiratorio</span>
+            <strong id="fisTiempoEspiratorio">2.5 s</strong>
+        </div>
+
+        <div class="datoFisiologico">
+            <span>Ventilación minuto</span>
+            <strong id="fisVentilacionMinuto">6.0 L/min</strong>
+        </div>
+
+        <div class="datoFisiologico">
+            <span>Volumen instantáneo simulado</span>
+            <strong id="fisVolumenActual">0 mL</strong>
+        </div>
+
+        <div class="datoFisiologico">
+            <span>Flujo instantáneo simulado</span>
+            <strong id="fisFlujoActual">0 L/min</strong>
+        </div>
+
+    </div>
+
+    <p class="notaFisiologica">
+        ⚕️ Simulación educativa basada en un modelo matemático
+        simplificado. Los valores no corresponden a mediciones
+        de un paciente.
+    </p>
+
+</section>
 
     </main>
 
