@@ -15,7 +15,8 @@
     padding: 25px;
 }
 
-#panelFisiologico {
+#panelFisiologico,
+#panelPresiones {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 15px;
@@ -357,7 +358,46 @@
 <!-- ===================================== -->
 <!-- GRÁFICAS RESPIRATORIAS -->
 <!-- ===================================== -->
+<!-- ===================================== -->
+<!-- PARÁMETROS DE PRESIÓN RESPIRATORIA -->
+<!-- ===================================== -->
 
+<h3>🫁 Mecánica respiratoria: presión y distensibilidad</h3>
+
+<p>
+    Explora las presiones respiratorias mediante un
+    modelo matemático simplificado de ventilación mecánica.
+</p>
+
+<div id="panelPresiones">
+
+    <div class="datoFisiologico">
+        <span>Presión positiva al final de la espiración (PEEP)</span>
+        <strong id="fisPEEP">5 cmH₂O</strong>
+    </div>
+
+    <div class="datoFisiologico">
+        <span>Presión meseta (Pplat)</span>
+        <strong id="fisPplat">15 cmH₂O</strong>
+    </div>
+
+    <div class="datoFisiologico">
+        <span>Presión pico (PIP)</span>
+        <strong id="fisPIP">15.9 cmH₂O</strong>
+    </div>
+
+    <div class="datoFisiologico">
+        <span>Distensibilidad estática</span>
+        <strong id="fisDistensibilidad">50 mL/cmH₂O</strong>
+    </div>
+
+</div>
+
+<p class="notaFisiologica">
+    ⚕️ Parámetros teóricos de ventilación mecánica.
+    Los valores son simulados y no corresponden
+    a mediciones de presión en un paciente.
+</p>
 <h3>📈 Gráficas respiratorias en tiempo real</h3>
 
 <p>
