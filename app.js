@@ -1338,6 +1338,9 @@ function actualizarPanelFisiologico(fase) {
   indicadores.flujoActual.textContent =
     flujoActual.toFixed(1) + " L/min";
 
+  // Actualizar parámetros de presión
+  actualizarPanelPresiones();
+
 }
 // MECÁNICA RESPIRATORIA
 // PRESIÓN Y DISTENSIBILIDAD
