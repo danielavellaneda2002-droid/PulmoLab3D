@@ -1340,6 +1340,178 @@ function actualizarPanelFisiologico(fase) {
 
 }
 // ======================================
+// GRÁFICAS RESPIRATORIAS SINCRONIZADAS
+// ======================================
+
+function dibujarGraficasRespiratorias() {
+
+    const fase = respiracionActiva
+        ? tiempoRespiratorio * (frecuenciaRespiratoria / 60) * Math.PI * 2
+        : 0;
+
+    const amplitudFlujo =
+        volumenCorriente * Math.PI * frecuenciaRespiratoria / 1000;
+
+    const duracionCiclo = 60 / frecuenciaRespiratoria;
+
+    function dibujarGrafica(idCanvas, tipo) {
+
+        const canvas = document.getElementById(idCanvas);
+
+        if (!canvas) return;
+
+        const ctx = canvas.getContext("2d");
+
+        const ancho = canvas.width;
+        const alto = canvas.height;
+
+        const izquierda = 65;
+        const derecha = 20;
+        const arriba = 25;
+        const abajo = 40;
+
+        const anchoGrafica = ancho - izquierda - derecha;
+        const altoGrafica = alto - arriba - abajo;
+
+        ctx.clearRect(0, 0, ancho, alto);
+
+        // Fondo
+        ctx.fillStyle = "#091525";
+        ctx.fillRect(0, 0, ancho, alto);
+
+        const esVolumen = tipo === "volumen";
+
+        const maximo = esVolumen
+            ? volumenCorriente
+            : amplitudFlujo * 1.15;
+
+        const minimo = esVolumen ? 0 : -maximo;
+
+        function calcularValor(f) {
+
+            if (esVolumen) {
+                return (volumenCorriente / 2) * (1 - Math.cos(f));
+            }
+
+            return amplitudFlujo * Math.sin(f);
+        }
+
+        function posicionY(valor) {
+
+            return arriba +
+                ((maximo - valor) / (maximo - minimo)) * altoGrafica;
+        }
+
+        // Cuadrícula
+        ctx.strokeStyle = "#24384c";
+        ctx.lineWidth = 1;
+
+        for (let i = 0; i <= 4; i++) {
+
+            const y = arriba + (altoGrafica / 4) * i;
+
+            ctx.beginPath();
+            ctx.moveTo(izquierda, y);
+            ctx.lineTo(ancho - derecha, y);
+            ctx.stroke();
+        }
+
+        // Eje horizontal
+        ctx.strokeStyle = "#60758a";
+
+        ctx.beginPath();
+        ctx.moveTo(izquierda, arriba);
+        ctx.lineTo(izquierda, alto - abajo);
+        ctx.lineTo(ancho - derecha, alto - abajo);
+        ctx.stroke();
+
+        // Dibujar dos ciclos respiratorios
+        ctx.beginPath();
+
+        ctx.strokeStyle = esVolumen ? "#67dce8" : "#4ade80";
+        ctx.lineWidth = 3;
+
+        const pasos = 300;
+
+        for (let i = 0; i <= pasos; i++) {
+
+            const f = (i / pasos) * Math.PI * 4;
+
+            const x = izquierda + (i / pasos) * anchoGrafica;
+
+            const y = posicionY(calcularValor(f));
+
+            if (i === 0) {
+                ctx.moveTo(x, y);
+            } else {
+                ctx.lineTo(x, y);
+            }
+        }
+
+        ctx.stroke();
+
+        // Indicador de la fase respiratoria actual
+        const faseActual = fase % (Math.PI * 4);
+
+        const xActual =
+            izquierda + (faseActual / (Math.PI * 4)) * anchoGrafica;
+
+        const yActual =
+            posicionY(calcularValor(faseActual));
+
+        // Línea vertical móvil
+        ctx.beginPath();
+        ctx.strokeStyle = "#ffffff55";
+        ctx.lineWidth = 1;
+        ctx.moveTo(xActual, arriba);
+        ctx.lineTo(xActual, alto - abajo);
+        ctx.stroke();
+
+        // Punto móvil
+        ctx.beginPath();
+        ctx.arc(xActual, yActual, 6, 0, Math.PI * 2);
+        ctx.fillStyle = "#ffffff";
+        ctx.fill();
+
+        // Etiquetas
+        ctx.fillStyle = "#b4c4d8";
+        ctx.font = "13px Arial";
+
+        ctx.fillText("0 s", izquierda, alto - 15);
+
+        ctx.fillText(
+            duracionCiclo.toFixed(1) + " s",
+            izquierda + anchoGrafica / 2 - 15,
+            alto - 15
+        );
+
+        ctx.fillText(
+            (duracionCiclo * 2).toFixed(1) + " s",
+            ancho - 75,
+            alto - 15
+        );
+
+        ctx.fillText(
+            esVolumen ? "500 mL" : "+" + amplitudFlujo.toFixed(1),
+            8,
+            arriba + 5
+        );
+
+        ctx.fillText(
+            esVolumen ? "0 mL" : "-" + amplitudFlujo.toFixed(1),
+            8,
+            alto - abajo
+        );
+
+        if (!esVolumen) {
+            ctx.fillText("0", 35, posicionY(0) + 4);
+        }
+    }
+
+    dibujarGrafica("graficaVolumen", "volumen");
+    dibujarGrafica("graficaFlujo", "flujo");
+}
+// ======================================
 // ANIMACIÓN RESPIRATORIA SINCRONIZADA
 // ======================================
 
@@ -1375,7 +1547,7 @@ function animar() {
     actualizarPanelFisiologico(0);
 
   }
-
+dibujarGraficasRespiratorias();
   controles.update();
 
   renderizador.render(escena, camara);
