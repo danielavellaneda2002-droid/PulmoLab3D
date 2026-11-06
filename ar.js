@@ -479,14 +479,12 @@ const posicionY =
     const posicion3DY =
         (0.5 - posicionY / alto) * 4;
 
-    // Mover los pulmones suavemente
-    grupoPulmones.position.lerp(
-        new THREE.Vector3(
-            posicion3DX,
-            posicion3DY,
-            0
-        ),
-        0.25
+    // Guardar la posición detectada por la IA
+grupoPulmones.userData.posicionObjetivo =
+    new THREE.Vector3(
+        posicion3DX,
+        posicion3DY,
+        0
     );
 
 }
