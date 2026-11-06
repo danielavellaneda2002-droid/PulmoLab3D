@@ -238,9 +238,9 @@ function animarAR() {
 
     }
 
-    // Mostrar pulmones cuando la cámara esté activa
-    renderizadorAR.domElement.style.opacity =
-        videoAR.srcObject ? "1" : "0";
+ // Visualización anatómica semitransparente
+renderizadorAR.domElement.style.opacity =
+    videoAR.srcObject ? "0.65" : "0";
 
     renderizadorAR.render(
         escenaAR,
