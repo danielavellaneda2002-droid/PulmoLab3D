@@ -250,3 +250,201 @@ function animarAR() {
 }
 
 animarAR();
+// ======================================
+// INTELIGENCIA ARTIFICIAL - MEDIAPIPE
+// DETECCIÓN DE HOMBROS Y TORSO
+// ======================================
+
+// Crear una capa transparente para dibujar
+// los puntos detectados por la IA
+const canvasIA = document.createElement("canvas");
+
+canvasIA.style.cssText = `
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+    pointer-events: none;
+    transform: scaleX(-1);
+`;
+
+contenedorAR.appendChild(canvasIA);
+
+const contextoIA = canvasIA.getContext("2d");
+
+// Mostrar el estado de la inteligencia artificial
+const estadoIA = document.createElement("p");
+
+estadoIA.textContent = "🤖 IA: cargando modelo...";
+estadoIA.style.color = "#55d9ed";
+
+contenedorAR.insertAdjacentElement(
+    "afterend",
+    estadoIA
+);
+
+// ======================================
+// CARGAR EL MODELO DE INTELIGENCIA ARTIFICIAL
+// ======================================
+
+async function iniciarInteligenciaArtificial() {
+
+    try {
+
+        const {
+            PoseLandmarker,
+            FilesetResolver
+        } = await import(
+            "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.22/+esm"
+        );
+
+        const vision = await FilesetResolver.forVisionTasks(
+            "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.22/wasm"
+        );
+
+        const detector = await PoseLandmarker.createFromOptions(
+            vision,
+            {
+                baseOptions: {
+                    modelAssetPath:
+                        "https://storage.googleapis.com/mediapipe-models/pose_landmarker/pose_landmarker_lite/float16/1/pose_landmarker_lite.task",
+                    delegate: "CPU"
+                },
+
+                runningMode: "VIDEO",
+                numPoses: 1
+            }
+        );
+
+        estadoIA.textContent =
+            "🤖 IA lista. Colócate frente a la cámara.";
+
+        let ultimoAnalisis = 0;
+
+        // ======================================
+        // DETECTAR EL CUERPO
+        // ======================================
+
+        function detectarCuerpo(tiempo) {
+
+            requestAnimationFrame(detectarCuerpo);
+
+            if (
+                !videoAR.srcObject ||
+                videoAR.readyState < 2 ||
+                !videoAR.videoWidth
+            ) {
+                return;
+            }
+
+            // Analizar aproximadamente 10 veces por segundo
+            if (tiempo - ultimoAnalisis < 100) {
+                return;
+            }
+
+            ultimoAnalisis = tiempo;
+
+            const resultado = detector.detectForVideo(
+                videoAR,
+                tiempo
+            );
+
+            const ancho = contenedorAR.clientWidth;
+            const alto = contenedorAR.clientHeight;
+
+            canvasIA.width = ancho;
+            canvasIA.height = alto;
+
+            contextoIA.clearRect(
+                0, 0, ancho, alto
+            );
+
+            if (
+                !resultado.landmarks ||
+                resultado.landmarks.length === 0
+            ) {
+
+                estadoIA.textContent =
+                    "🤖 IA activa: buscando una persona...";
+
+                return;
+            }
+
+            const puntos = resultado.landmarks[0];
+
+            // Puntos anatómicos:
+            // 11: hombro izquierdo
+            // 12: hombro derecho
+            // 23: cadera izquierda
+            // 24: cadera derecha
+
+            const indices = [11, 12, 23, 24];
+
+            // Ajustar coordenadas al recorte de la cámara
+            const escala = Math.max(
+                ancho / videoAR.videoWidth,
+                alto / videoAR.videoHeight
+            );
+
+            const desplazamientoX =
+                (ancho - videoAR.videoWidth * escala) / 2;
+
+            const desplazamientoY =
+                (alto - videoAR.videoHeight * escala) / 2;
+
+            indices.forEach(indice => {
+
+                const punto = puntos[indice];
+
+                if (!punto || punto.visibility < 0.5) {
+                    return;
+                }
+
+                const x =
+                    punto.x * videoAR.videoWidth * escala +
+                    desplazamientoX;
+
+                const y =
+                    punto.y * videoAR.videoHeight * escala +
+                    desplazamientoY;
+
+                contextoIA.beginPath();
+
+                contextoIA.arc(
+                    x,
+                    y,
+                    8,
+                    0,
+                    Math.PI * 2
+                );
+
+                contextoIA.fillStyle = "#00ff88";
+                contextoIA.fill();
+
+                contextoIA.lineWidth = 2;
+                contextoIA.strokeStyle = "#ffffff";
+                contextoIA.stroke();
+
+            });
+
+            estadoIA.textContent =
+                "✅ IA: cuerpo detectado correctamente";
+
+        }
+
+        requestAnimationFrame(detectarCuerpo);
+
+    } catch (error) {
+
+        console.error("Error de MediaPipe:", error);
+
+        estadoIA.textContent =
+            "❌ No se pudo iniciar la inteligencia artificial.";
+
+    }
+
+}
+
+iniciarInteligenciaArtificial();
