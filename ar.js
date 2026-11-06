@@ -423,6 +423,40 @@ if (
         (hombroDerecho.y - hombroIzquierdo.y) *
             videoAR.videoHeight * escala
     );
+    // ======================================
+// AJUSTAR TAMAÑO SEGÚN EL CUERPO
+// ======================================
+
+// Medir el ancho actual de los pulmones en píxeles
+const anchoModeloActual =
+    new THREE.Box3()
+        .setFromObject(grupoPulmones)
+        .getSize(new THREE.Vector3()).x *
+    (alto / 4);
+
+if (anchoModeloActual > 0) {
+
+    // Los pulmones ocuparán aproximadamente
+    // el 85 % de la distancia entre hombros
+    const anchoDeseado = distanciaHombros * 0.85;
+
+    // Calcular la escala necesaria
+    const escalaDeseada =
+        grupoPulmones.scale.x *
+        (anchoDeseado / anchoModeloActual);
+
+    // Cambiar de tamaño progresivamente
+    const escalaActual =
+        grupoPulmones.userData.escalaBase ??
+        grupoPulmones.scale.x;
+
+    grupoPulmones.userData.escalaBase =
+        THREE.MathUtils.lerp(
+            escalaActual,
+            escalaDeseada,
+            0.2
+        );
+}
 
     // Convertir las coordenadas al tamaño de la cámara
     const posicionX =
