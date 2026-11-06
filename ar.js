@@ -294,11 +294,11 @@ async function iniciarInteligenciaArtificial() {
     try {
 
         const {
-    PoseLandmarker,
-    FilesetResolver
-} = await import(
-    "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.22/vision_bundle.mjs"
-);
+            PoseLandmarker,
+            FilesetResolver
+        } = await import(
+            "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.22/+esm"
+        );
 
         const vision = await FilesetResolver.forVisionTasks(
             "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.22/wasm"
