@@ -241,7 +241,29 @@ function animarAR() {
  // Visualización anatómica semitransparente
 renderizadorAR.domElement.style.opacity =
     videoAR.srcObject ? "0.65" : "0";
+// ======================================
+// ESTABILIZACIÓN DEL SEGUIMIENTO CORPORAL
+// ======================================
 
+const objetivo =
+    grupoPulmones.userData.posicionObjetivo;
+
+if (objetivo) {
+
+    const distancia =
+        grupoPulmones.position.distanceTo(objetivo);
+
+    // Ignorar movimientos muy pequeños
+    if (distancia > 0.035) {
+
+        // Desplazamiento progresivo hacia el objetivo
+        grupoPulmones.position.lerp(
+            objetivo,
+            0.10
+        );
+
+    }
+}
     renderizadorAR.render(
         escenaAR,
         camaraAR
