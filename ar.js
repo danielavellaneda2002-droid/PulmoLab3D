@@ -429,12 +429,11 @@ if (
         centroX * videoAR.videoWidth * escala +
         desplazamientoX;
 
-    // Situar los pulmones debajo de los hombros
-    const posicionY =
-        centroY * videoAR.videoHeight * escala +
-        desplazamientoY +
-        distanciaHombros * 0.23;
-
+  // Situar los pulmones sobre la región torácica
+const posicionY =
+    centroY * videoAR.videoHeight * escala +
+    desplazamientoY +
+    distanciaHombros * 0.55;
     // Corregir el efecto espejo de la cámara
     const posicionXEspejo = ancho - posicionX;
 
