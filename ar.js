@@ -392,7 +392,71 @@ const vision = await FilesetResolver.forVisionTasks(
 
             const desplazamientoY =
                 (alto - videoAR.videoHeight * escala) / 2;
+// ======================================
+// SEGUIMIENTO DEL TÓRAX CON IA
+// ======================================
 
+// Obtener las coordenadas de los hombros
+const hombroIzquierdo = puntos[11];
+const hombroDerecho = puntos[12];
+
+if (
+    modeloCargado &&
+    hombroIzquierdo &&
+    hombroDerecho &&
+    hombroIzquierdo.visibility > 0.5 &&
+    hombroDerecho.visibility > 0.5
+) {
+
+    // Calcular el punto medio entre los hombros
+    const centroX =
+        (hombroIzquierdo.x + hombroDerecho.x) / 2;
+
+    const centroY =
+        (hombroIzquierdo.y + hombroDerecho.y) / 2;
+
+    // Calcular la distancia entre los hombros
+    const distanciaHombros = Math.hypot(
+        (hombroDerecho.x - hombroIzquierdo.x) *
+            videoAR.videoWidth * escala,
+
+        (hombroDerecho.y - hombroIzquierdo.y) *
+            videoAR.videoHeight * escala
+    );
+
+    // Convertir las coordenadas al tamaño de la cámara
+    const posicionX =
+        centroX * videoAR.videoWidth * escala +
+        desplazamientoX;
+
+    // Situar los pulmones debajo de los hombros
+    const posicionY =
+        centroY * videoAR.videoHeight * escala +
+        desplazamientoY +
+        distanciaHombros * 0.23;
+
+    // Corregir el efecto espejo de la cámara
+    const posicionXEspejo = ancho - posicionX;
+
+    // Convertir las coordenadas a la escena de Three.js
+    const posicion3DX =
+        (posicionXEspejo / ancho - 0.5) *
+        (4 * ancho / alto);
+
+    const posicion3DY =
+        (0.5 - posicionY / alto) * 4;
+
+    // Mover los pulmones suavemente
+    grupoPulmones.position.lerp(
+        new THREE.Vector3(
+            posicion3DX,
+            posicion3DY,
+            0
+        ),
+        0.25
+    );
+
+}
             indices.forEach(indice => {
 
                 const punto = puntos[indice];
