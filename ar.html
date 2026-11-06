@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>PulmoLab AR</title>
+
+    <style>
+        body {
+            margin: 0;
+            background: #081421;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        header {
+            padding: 20px;
+            background: #10263b;
+        }
+
+        h1 {
+            color: #55d9ed;
+            margin-bottom: 8px;
+        }
+
+        .contenedorCamara {
+            position: relative;
+            width: 95%;
+            max-width: 700px;
+            height: 500px;
+            margin: 20px auto;
+            background: #000;
+            border: 2px solid #21b8d0;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        #camara {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: scaleX(-1);
+        }
+
+        button {
+            background: #1594aa;
+            color: white;
+            border: none;
+            padding: 14px 22px;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 8px;
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        #estado {
+            color: #b4c4d8;
+            margin: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>🫁 PulmoLab AR</h1>
+        <p>Realidad aumentada aplicada a la anatomía pulmonar</p>
+    </header>
+
+    <div class="contenedorCamara">
+
+        <video
+            id="camara"
+            autoplay
+            playsinline
+            muted>
+        </video>
+
+    </div>
+
+    <button id="activarCamara">
+        📷 Activar cámara
+    </button>
+
+    <button id="detenerCamara" disabled>
+        ⏹️ Detener cámara
+    </button>
+
+    <p id="estado">
+        Cámara desactivada
+    </p>
+
+    <script>
+
+        const video = document.getElementById("camara");
+
+        const botonActivar =
+            document.getElementById("activarCamara");
+
+        const botonDetener =
+            document.getElementById("detenerCamara");
+
+        const estado =
+            document.getElementById("estado");
+
+        let transmision = null;
+
+        async function activarCamara() {
+
+            botonActivar.disabled = true;
+            estado.textContent = "Solicitando acceso a la cámara...";
+
+            try {
+
+                if (!navigator.mediaDevices?.getUserMedia) {
+                    throw new Error(
+                        "Este navegador no permite acceder a la cámara."
+                    );
+                }
+
+                transmision =
+                    await navigator.mediaDevices.getUserMedia({
+
+                        video: {
+                            facingMode: "user"
+                        },
+
+                        audio: false
+
+                    });
+
+                video.srcObject = transmision;
+
+                await video.play();
+
+                estado.textContent =
+                    "✅ Cámara activada correctamente";
+
+                botonDetener.disabled = false;
+
+            } catch (error) {
+
+                console.error(error);
+
+                detenerCamara();
+
+                estado.textContent =
+                    "❌ No se pudo activar la cámara. " +
+                    "Revisa los permisos del navegador.";
+
+            }
+
+        }
+
+        function detenerCamara() {
+
+            if (transmision) {
+
+                transmision.getTracks().forEach(track => {
+                    track.stop();
+                });
+
+                transmision = null;
+
+            }
+
+            video.srcObject = null;
+
+            botonActivar.disabled = false;
+            botonDetener.disabled = true;
+
+            estado.textContent = "Cámara desactivada";
+
+        }
+
+        botonActivar.addEventListener(
+            "click",
+            activarCamara
+        );
+
+        botonDetener.addEventListener(
+            "click",
+            detenerCamara
+        );
+
+        window.addEventListener(
+            "pagehide",
+            detenerCamara
+        );
+
+    </script>
+
+</body>
+</html>
