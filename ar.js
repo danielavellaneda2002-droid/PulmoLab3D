@@ -202,6 +202,8 @@ observadorAR.observe(contenedorAR);
 const relojAR = new THREE.Clock();
 // Guardar cuándo la IA detectó el cuerpo por última vez
 let ultimaDeteccion = 0;
+// Control de transparencia de los pulmones
+let opacidadPulmones = 0.65;
 function animarAR() {
 
     requestAnimationFrame(animarAR);
