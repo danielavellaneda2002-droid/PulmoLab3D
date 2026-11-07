@@ -153,17 +153,17 @@ let tipoCamara = "user";
                     );
                 }
 
-                transmision =
-                    await navigator.mediaDevices.getUserMedia({
+             transmision =
+    await navigator.mediaDevices.getUserMedia({
 
-                        video: {
-                            facingMode: "user"
-                        },
+        video: {
+            facingMode: {
+                ideal: tipoCamara
+            }
+        },
 
-                        audio: false
-
-                    });
-
+        audio: false
+    });
                 video.srcObject = transmision;
 
                 await video.play();
