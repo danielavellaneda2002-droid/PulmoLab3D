@@ -679,3 +679,88 @@ grupoPulmones.userData.posicionObjetivo =
 }
 
 iniciarInteligenciaArtificial();
+// ======================================
+// PANEL INFORMATIVO PULMOLAB AR
+// ======================================
+
+const panelInfoAR = document.createElement("div");
+
+panelInfoAR.style.cssText = `
+    background: #10283b;
+    border: 1px solid #00b894;
+    border-radius: 12px;
+    padding: 18px;
+    margin: 20px auto;
+    max-width: 650px;
+    color: white;
+    font-family: Arial, sans-serif;
+    text-align: left;
+    box-sizing: border-box;
+`;
+
+panelInfoAR.innerHTML = `
+    <h3 style="color: #55d9ed; margin-top: 0;">
+        🫁 PULMOLAB AR | ESTADO DEL SISTEMA
+    </h3>
+
+    <p id="infoDeteccionAR">
+        🤖 Detección corporal: esperando...
+    </p>
+
+    <p id="infoModoAR">
+        🫁 Visualización: visión interna
+    </p>
+
+    <p>
+        💨 Frecuencia respiratoria simulada: 12 rpm
+    </p>
+`;
+
+// Colocar el panel debajo de los botones
+controlesVistaAR.insertAdjacentElement(
+    "afterend",
+    panelInfoAR
+);
+
+// Actualizar la información del sistema
+function actualizarPanelAR() {
+
+    const infoDeteccion =
+        document.getElementById("infoDeteccionAR");
+
+    const infoModo =
+        document.getElementById("infoModoAR");
+
+    const cuerpoDetectado =
+        videoAR.srcObject &&
+        Date.now() - ultimaDeteccion < 1000;
+
+    if (!videoAR.srcObject) {
+
+        infoDeteccion.textContent =
+            "📷 Cámara desactivada";
+
+    } else if (cuerpoDetectado) {
+
+        infoDeteccion.textContent =
+            "🟢 Detección corporal: activa";
+
+    } else {
+
+        infoDeteccion.textContent =
+            "🟡 Detección corporal: buscando persona";
+
+    }
+
+    infoModo.textContent =
+        opacidadPulmones === 1
+            ? "🫁 Visualización: modo anatómico"
+            : "🩻 Visualización: visión interna";
+
+}
+
+// Actualizar cada medio segundo
+setInterval(actualizarPanelAR, 500);
+
+// Mostrar la información inicial
+actualizarPanelAR();
