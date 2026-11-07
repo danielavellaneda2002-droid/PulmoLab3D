@@ -200,7 +200,8 @@ observadorAR.observe(contenedorAR);
 // ======================================
 
 const relojAR = new THREE.Clock();
-
+// Guardar cuándo la IA detectó el cuerpo por última vez
+let ultimaDeteccion = 0;
 function animarAR() {
 
     requestAnimationFrame(animarAR);
@@ -238,9 +239,14 @@ function animarAR() {
 
     }
 
- // Visualización anatómica semitransparente
+// Comprobar si la IA detectó el cuerpo recientemente
+const cuerpoVisible =
+    Date.now() - ultimaDeteccion < 1000;
+
+// Mostrar los pulmones únicamente cuando
+// la cámara esté activa y el cuerpo sea visible
 renderizadorAR.domElement.style.opacity =
-    videoAR.srcObject ? "0.65" : "0";
+    videoAR.srcObject && cuerpoVisible ? "0.65" : "0";
 // ======================================
 // ESTABILIZACIÓN DEL SEGUIMIENTO CORPORAL
 // ======================================
@@ -428,7 +434,9 @@ if (
     hombroDerecho &&
     hombroIzquierdo.visibility > 0.5 &&
     hombroDerecho.visibility > 0.5
-) {
+) { 
+    // La IA reconoce correctamente ambos hombros
+ultimaDeteccion = Date.now();
 
     // Calcular el punto medio entre los hombros
     const centroX =
