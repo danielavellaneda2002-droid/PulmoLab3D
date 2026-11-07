@@ -126,7 +126,123 @@
     <p id="estado">
         Cámara desactivada
     </p>
+// ======================================
+// CAMBIAR ENTRE CÁMARA FRONTAL Y TRASERA
+// ======================================
 
+const botonCambiarCamara =
+    document.getElementById("cambiarCamara");
+
+botonCambiarCamara.addEventListener("click", async () => {
+
+    const videoCambio =
+        document.getElementById("camara");
+
+    // Comprobar que la cámara esté encendida
+    if (!videoCambio.srcObject) {
+        alert("Primero debes activar la cámara.");
+        return;
+    }
+
+    botonCambiarCamara.disabled = true;
+
+    // Guardar la cámara que estamos utilizando
+    const camaraAnterior = tipoCamara;
+
+    // Seleccionar la cámara contraria
+    const nuevaCamara =
+        tipoCamara === "user"
+            ? "environment"
+            : "user";
+
+    // Detener la transmisión anterior
+    transmision.getTracks().forEach(track => {
+        track.stop();
+    });
+
+    videoCambio.srcObject = null;
+
+    try {
+
+        // Solicitar la nueva cámara
+        const nuevaTransmision =
+            await navigator.mediaDevices.getUserMedia({
+                video: {
+                    facingMode: {
+                        exact: nuevaCamara
+                    }
+                },
+                audio: false
+            });
+
+        transmision = nuevaTransmision;
+
+        videoCambio.srcObject = transmision;
+
+        await videoCambio.play();
+
+        // Actualizar la cámara seleccionada
+        tipoCamara = nuevaCamara;
+
+        // La cámara frontal utiliza efecto espejo
+        const usarEspejo = tipoCamara === "user";
+
+        videoCambio.style.transform =
+            usarEspejo ? "scaleX(-1)" : "none";
+
+        videoCambio.dataset.mirrored =
+            String(usarEspejo);
+
+        console.log(
+            "Cámara activa:",
+            tipoCamara
+        );
+
+    } catch (error) {
+
+        console.error(
+            "No se pudo cambiar la cámara:",
+            error
+        );
+
+        // Intentar recuperar la cámara anterior
+        try {
+
+            transmision =
+                await navigator.mediaDevices.getUserMedia({
+                    video: {
+                        facingMode: {
+                            ideal: camaraAnterior
+                        }
+                    },
+                    audio: false
+                });
+
+            videoCambio.srcObject = transmision;
+
+            await videoCambio.play();
+
+        } catch (errorRecuperacion) {
+
+            console.error(
+                "No se pudo recuperar la cámara:",
+                errorRecuperacion
+            );
+
+        }
+
+        alert(
+            "No fue posible cambiar de cámara. " +
+            "Comprueba que el dispositivo tenga otra cámara disponible."
+        );
+
+    } finally {
+
+        botonCambiarCamara.disabled = false;
+
+    }
+
+});
     <script>
 
         const video = document.getElementById("camara");
