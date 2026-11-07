@@ -363,19 +363,62 @@ estadoIA.insertAdjacentElement(
     controlesVistaAR
 );
 
-// Mostrar pulmones completamente visibles
+// ======================================
+// INDICADOR DEL MODO SELECCIONADO
+// ======================================
+
+function actualizarModoVisual() {
+
+    // Apariencia del modo anatómico
+    botonAnatomico.style.backgroundColor =
+        opacidadPulmones === 1 ? "#00b894" : "#087e99";
+
+    botonAnatomico.style.boxShadow =
+        opacidadPulmones === 1
+            ? "0 0 15px rgba(0, 255, 180, 0.6)"
+            : "none";
+
+    // Apariencia del modo visión interna
+    botonInterno.style.backgroundColor =
+        opacidadPulmones === 0.65 ? "#00b894" : "#087e99";
+
+    botonInterno.style.boxShadow =
+        opacidadPulmones === 0.65
+            ? "0 0 15px rgba(0, 255, 180, 0.6)"
+            : "none";
+
+    // Información de accesibilidad
+    botonAnatomico.setAttribute(
+        "aria-pressed",
+        opacidadPulmones === 1
+    );
+
+    botonInterno.setAttribute(
+        "aria-pressed",
+        opacidadPulmones === 0.65
+    );
+}
+
+// Activar modo anatómico
 botonAnatomico.addEventListener("click", () => {
 
     opacidadPulmones = 1;
 
+    actualizarModoVisual();
+
 });
 
-// Activar visualización semitransparente
+// Activar visión interna
 botonInterno.addEventListener("click", () => {
 
     opacidadPulmones = 0.65;
 
+    actualizarModoVisual();
+
 });
+
+// Mostrar el modo seleccionado al iniciar
+actualizarModoVisual();
 
 // ======================================
 // CARGAR EL MODELO DE INTELIGENCIA ARTIFICIAL
