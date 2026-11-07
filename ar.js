@@ -248,7 +248,9 @@ const cuerpoVisible =
 // Mostrar los pulmones únicamente cuando
 // la cámara esté activa y el cuerpo sea visible
 renderizadorAR.domElement.style.opacity =
-    videoAR.srcObject && cuerpoVisible ? "0.65" : "0";
+    videoAR.srcObject && cuerpoVisible
+        ? String(opacidadPulmones)
+        : "0";
 // ======================================
 // ESTABILIZACIÓN DEL SEGUIMIENTO CORPORAL
 // ======================================
