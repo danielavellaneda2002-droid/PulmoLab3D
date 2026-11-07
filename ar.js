@@ -316,6 +316,66 @@ contenedorAR.insertAdjacentElement(
     "afterend",
     estadoIA
 );
+// ======================================
+// CONTROLES DE VISUALIZACIÓN AR
+// ======================================
+
+const controlesVistaAR = document.createElement("div");
+
+controlesVistaAR.style.cssText = `
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 15px 0;
+`;
+
+// Botón: modo anatómico
+const botonAnatomico = document.createElement("button");
+
+botonAnatomico.textContent = "🫁 Modo anatómico";
+
+// Botón: visión interna
+const botonInterno = document.createElement("button");
+
+botonInterno.textContent = "🩻 Visión interna";
+
+// Estilo de los botones
+[botonAnatomico, botonInterno].forEach(boton => {
+
+    boton.style.cssText = `
+        background: #087e99;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        padding: 12px 18px;
+        cursor: pointer;
+        font-size: 15px;
+    `;
+
+    controlesVistaAR.appendChild(boton);
+
+});
+
+// Colocar los botones debajo del mensaje de IA
+estadoIA.insertAdjacentElement(
+    "afterend",
+    controlesVistaAR
+);
+
+// Mostrar pulmones completamente visibles
+botonAnatomico.addEventListener("click", () => {
+
+    opacidadPulmones = 1;
+
+});
+
+// Activar visualización semitransparente
+botonInterno.addEventListener("click", () => {
+
+    opacidadPulmones = 0.65;
+
+});
 
 // ======================================
 // CARGAR EL MODELO DE INTELIGENCIA ARTIFICIAL
