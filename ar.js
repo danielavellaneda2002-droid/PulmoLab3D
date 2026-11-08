@@ -605,9 +605,12 @@ const posicionY =
     centroY * videoAR.videoHeight * escala +
     desplazamientoY +
     distanciaHombros * 0.25;
-    // Corregir el efecto espejo de la cámara
-    const posicionXEspejo = ancho - posicionX;
-
+  // Aplicar el efecto espejo únicamente
+// cuando se utiliza la cámara frontal
+const posicionXEspejo =
+    videoAR.dataset.mirrored === "false"
+        ? posicionX
+        : ancho - posicionX;
     // Convertir las coordenadas a la escena de Three.js
     const posicion3DX =
         (posicionXEspejo / ancho - 0.5) *
