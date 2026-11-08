@@ -479,7 +479,11 @@ const vision = await FilesetResolver.forVisionTasks(
             }
 
             ultimoAnalisis = tiempo;
-
+// Ajustar los puntos de IA según la cámara activa
+canvasIA.style.transform =
+    videoAR.dataset.mirrored === "false"
+        ? "none"
+        : "scaleX(-1)";
             const resultado = detector.detectForVideo(
                 videoAR,
                 tiempo
