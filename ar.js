@@ -771,3 +771,32 @@ setInterval(actualizarPanelAR, 500);
 
 // Mostrar la información inicial
 actualizarPanelAR();
+// ======================================
+// EXPLORADOR ANATÓMICO PULMOLAB AR
+// ======================================
+
+import("./explorador-ar.js")
+    .then(({ iniciarExploradorAR }) => {
+
+        iniciarExploradorAR({
+            contenedorAR,
+            camaraAR,
+            grupoPulmones,
+            controlesVistaAR,
+            videoAR,
+            renderizadorAR
+        });
+
+        console.log(
+            "Explorador anatómico iniciado correctamente"
+        );
+
+    })
+    .catch((error) => {
+
+        console.error(
+            "Error al iniciar el explorador anatómico:",
+            error
+        );
+
+    });
