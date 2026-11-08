@@ -312,7 +312,7 @@ const estadoIA = document.createElement("p");
 estadoIA.textContent = "🤖 IA: cargando modelo...";
 estadoIA.style.color = "#55d9ed";
 
-contenedorAR.insertAdjacentElement(
+document.getElementById("estado").insertAdjacentElement(
     "afterend",
     estadoIA
 );
