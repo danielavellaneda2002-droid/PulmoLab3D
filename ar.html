@@ -79,10 +79,33 @@ header p {
             cursor: not-allowed;
         }
 
-        #estado {
-            color: #b4c4d8;
-            margin: 15px;
-        }
+      /* Botones de cámara compactos en celulares */
+@media (max-width: 600px) {
+
+    #activarCamara,
+    #detenerCamara,
+    #cambiarCamara {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        vertical-align: middle;
+        box-sizing: border-box;
+
+        width: calc(33.333% - 12px);
+        min-height: 52px;
+
+        padding: 8px 3px;
+        margin: 4px 2px;
+
+        font-size: 12px;
+        line-height: 1.2;
+    }
+
+    #estado {
+        margin: 8px 4px 14px;
+        font-size: 13px;
+    }
+}
     </style>
 <!-- Configuración de Three.js para PulmoLab AR -->
 <script type="importmap">
